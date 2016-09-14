@@ -1,0 +1,108 @@
+$body-background: #F9FEF9;
+$primary-color: #333;
+$secondary-color: #FFC0A9;
+
+$primary-font-size: 20pt;
+$secondary-font-size: $primary-font-size * .9;
+
+$primary-row-size: 700px;
+
+body, html {
+    background: $body-background;
+    color: $primary-color;
+
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-size: $primary-font-size;
+}
+
+article {
+    font-size: $secondary-font-size;
+}
+
+a, a:link, a:visited, a:hover, a:active { 
+    color: $secondary-color;
+}
+
+@mixin alert-box($border-size) {
+    padding: $border-size * 5;
+    border-size: $border-size;
+    border-style: solid;
+    border-color: #000;
+}
+
+$danger-color: #FF0000;
+
+.danger {
+    color:$danger-color;   
+}
+
+.alert {
+    @include alert-box(2px);
+}
+
+.alert-danger {    
+    @extend .alert;
+    @extend .danger;
+    border: 1px solid $danger-color;
+}
+
+$small-size: 0px;
+$medium-size: 501px;
+$large-size: 901px;
+
+$number-of-columns: 8;
+
+$prefix-small: "sm";
+$prefix-medium: "md";
+$prefix-large: "lg";
+
+%col-basics {
+    float: left;
+    display: block;
+    min-height: 1px;
+}
+
+@mixin create-column($col) {
+
+        .col-#{$prefix-large}-#{$col} {
+            @extend %col-basics;
+            width: 100%;
+
+            @media screen and (min-width: $large-size) {
+                width: $col / $number-of-columns * 100%;
+            }
+
+        }
+
+        .col-#{$prefix-medium}-#{$col} {
+            @extend %col-basics;
+            width: 100%;
+
+            @media screen and (min-width: $medium-size) {
+                color: pink;
+            }
+        }
+
+        .col-#{$prefix-small}-#{$col} {
+            @extend %col-basics;
+            width: $col / $number-of-columns * 100%;
+        }
+}
+
+// Default (small size) 
+// list out col-lg-* as 100% width, float left, etc
+// list out col-md-* as 100%width, float left, etc
+// list out col-sm-* as x width, float left, etc
+
+.container {
+    width: 100%;
+
+    .row {
+        max-width: $primary-row-size;
+        margin: auto;
+
+        @for $col from 1 through $number-of-columns {
+            @include create-column($col);
+        }
+    }
+}

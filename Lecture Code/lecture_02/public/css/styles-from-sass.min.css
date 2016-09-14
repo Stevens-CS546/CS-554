@@ -1,0 +1,130 @@
+body, html {
+  background: #F9FEF9;
+  color: #333;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 20pt; }
+
+article {
+  font-size: 18pt; }
+
+a, a:link, a:visited, a:hover, a:active {
+  color: #FFC0A9; }
+
+.danger, .alert-danger {
+  color: #FF0000; }
+
+.alert, .alert-danger {
+  padding: 10px;
+  border-size: 2px;
+  border-style: solid;
+  border-color: #000; }
+
+.alert-danger {
+  border: 1px solid #FF0000; }
+
+.container .row .col-lg-1, .container .row .col-md-1, .container .row .col-sm-1, .container .row .col-lg-2, .container .row .col-md-2, .container .row .col-sm-2, .container .row .col-lg-3, .container .row .col-md-3, .container .row .col-sm-3, .container .row .col-lg-4, .container .row .col-md-4, .container .row .col-sm-4, .container .row .col-lg-5, .container .row .col-md-5, .container .row .col-sm-5, .container .row .col-lg-6, .container .row .col-md-6, .container .row .col-sm-6, .container .row .col-lg-7, .container .row .col-md-7, .container .row .col-sm-7, .container .row .col-lg-8, .container .row .col-md-8, .container .row .col-sm-8 {
+  float: left;
+  display: block;
+  min-height: 1px; }
+
+.container {
+  width: 100%; }
+  .container .row {
+    max-width: 700px;
+    margin: auto; }
+    .container .row .col-lg-1 {
+      width: 100%; }
+      @media screen and (min-width: 901px) {
+        .container .row .col-lg-1 {
+          color: purple; } }
+    .container .row .col-md-1 {
+      width: 100%; }
+      @media screen and (min-width: 501px) {
+        .container .row .col-md-1 {
+          color: pink; } }
+    .container .row .col-sm-1 {
+      width: 12.5%; }
+    .container .row .col-lg-2 {
+      width: 100%; }
+      @media screen and (min-width: 901px) {
+        .container .row .col-lg-2 {
+          color: purple; } }
+    .container .row .col-md-2 {
+      width: 100%; }
+      @media screen and (min-width: 501px) {
+        .container .row .col-md-2 {
+          color: pink; } }
+    .container .row .col-sm-2 {
+      width: 25%; }
+    .container .row .col-lg-3 {
+      width: 100%; }
+      @media screen and (min-width: 901px) {
+        .container .row .col-lg-3 {
+          color: purple; } }
+    .container .row .col-md-3 {
+      width: 100%; }
+      @media screen and (min-width: 501px) {
+        .container .row .col-md-3 {
+          color: pink; } }
+    .container .row .col-sm-3 {
+      width: 37.5%; }
+    .container .row .col-lg-4 {
+      width: 100%; }
+      @media screen and (min-width: 901px) {
+        .container .row .col-lg-4 {
+          color: purple; } }
+    .container .row .col-md-4 {
+      width: 100%; }
+      @media screen and (min-width: 501px) {
+        .container .row .col-md-4 {
+          color: pink; } }
+    .container .row .col-sm-4 {
+      width: 50%; }
+    .container .row .col-lg-5 {
+      width: 100%; }
+      @media screen and (min-width: 901px) {
+        .container .row .col-lg-5 {
+          color: purple; } }
+    .container .row .col-md-5 {
+      width: 100%; }
+      @media screen and (min-width: 501px) {
+        .container .row .col-md-5 {
+          color: pink; } }
+    .container .row .col-sm-5 {
+      width: 62.5%; }
+    .container .row .col-lg-6 {
+      width: 100%; }
+      @media screen and (min-width: 901px) {
+        .container .row .col-lg-6 {
+          color: purple; } }
+    .container .row .col-md-6 {
+      width: 100%; }
+      @media screen and (min-width: 501px) {
+        .container .row .col-md-6 {
+          color: pink; } }
+    .container .row .col-sm-6 {
+      width: 75%; }
+    .container .row .col-lg-7 {
+      width: 100%; }
+      @media screen and (min-width: 901px) {
+        .container .row .col-lg-7 {
+          color: purple; } }
+    .container .row .col-md-7 {
+      width: 100%; }
+      @media screen and (min-width: 501px) {
+        .container .row .col-md-7 {
+          color: pink; } }
+    .container .row .col-sm-7 {
+      width: 87.5%; }
+    .container .row .col-lg-8 {
+      width: 100%; }
+      @media screen and (min-width: 901px) {
+        .container .row .col-lg-8 {
+          color: purple; } }
+    .container .row .col-md-8 {
+      width: 100%; }
+      @media screen and (min-width: 501px) {
+        .container .row .col-md-8 {
+          color: pink; } }
+    .container .row .col-sm-8 {
+      width: 100%; }
