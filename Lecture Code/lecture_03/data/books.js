@@ -17,7 +17,7 @@ let exportedMethods = {
         const bookPath = path.resolve(__dirname, "book-files/", `${id}.html`);
 
         return fs.statAsync(bookPath).then((stats) => {
-            return fs.readFileAsync(bookPath);
+            return fs.readFileAsync(bookPath, "utf-8");
         });
     }
 }

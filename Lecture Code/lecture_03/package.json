@@ -9,7 +9,7 @@
   "productName": "CS-554",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron/electron-quick-start.git"
+    "url": "git+https://github.com/Stevens-CS546/CS-554"
   },
   "keywords": [
     "Electron",
@@ -20,9 +20,9 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/electron/electron-quick-start/issues"
+    "url": "https://github.com/Stevens-CS546/CS-554/issues"
   },
-  "homepage": "https://github.com/electron/electron-quick-start#readme",
+  "homepage": "https://github.com/Stevens-CS546/CS-554#readme",
   "devDependencies": {
     "electron": "^1.3.4",
     "electron-rebuild": "^1.2.1",

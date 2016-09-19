@@ -5,7 +5,7 @@ const bookData = data.books;
 
 router.get("/:id", (req, res) => {
     bookData.getBook(req.params.id).then((book) => {
-        res.render("books/single", book);
+        res.render("books/single", {bookContent: book});
     }).catch(() => {
         res.status(404).json({ error: "User not found" });
     });
