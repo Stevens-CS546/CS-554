@@ -14,12 +14,12 @@ const constructorMethod = () => {
 
   function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({ width: 800, height: 600 })
+    mainWindow = new BrowserWindow({ width: 1200, height: 900 })
 
     mainWindow.loadURL('http://localhost:3000/');
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools({mode: "undocked"});
+    // mainWindow.webContents.openDevTools({mode: "undocked"});
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
