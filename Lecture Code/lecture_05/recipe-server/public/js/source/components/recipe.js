@@ -35,8 +35,8 @@ const Recipe = React.createClass({
       let ingredients = this
         .props
         .ingredients
-        .map((step) => {
-          return <li>{step}</li>;
+        .map((ingredient) => {
+          return <Ingredient {...ingredient}></Ingredient>;
         });
 
       bodyContent = (
@@ -46,15 +46,17 @@ const Recipe = React.createClass({
           </p>
           <div className="row">
             <div className="col-md-8">
+              <h2>Ingredients</h2>
+              <ul>
+                {ingredients}
+              </ul>
+
+              <h2>Steps</h2>
               <ol>
                 {steps}
               </ol>
             </div>
-            <div className="col-sm-4">
-              <ul>
-                {ingredients}
-              </ul>
-            </div>
+            <div className="col-sm-4"></div>
           </div>
         </div>
       );

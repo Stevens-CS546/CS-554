@@ -20,6 +20,10 @@ var Recipe = React.createClass({
     this.setState({ showingDetails: false });
   },
   render: function render() {
+
+    var bodyContent = undefined;
+    var toggler = undefined;
+
     if (this.state.showingDetails) {
       var steps = this.props.steps.map(function (step) {
         return React.createElement(
@@ -37,84 +41,79 @@ var Recipe = React.createClass({
         );
       });
 
-      return React.createElement(
+      bodyContent = React.createElement(
         "div",
-        { className: "panel panel-default" },
+        null,
         React.createElement(
-          "div",
-          { className: "panel-heading" },
-          this.props.title
+          "p",
+          null,
+          this.props.description
         ),
         React.createElement(
           "div",
-          { className: "panel-body" },
+          { className: "row" },
           React.createElement(
-            "p",
-            null,
-            this.props.description
+            "div",
+            { className: "col-md-8" },
+            React.createElement(
+              "ol",
+              null,
+              steps
+            )
           ),
           React.createElement(
             "div",
-            { className: "row" },
+            { className: "col-sm-4" },
             React.createElement(
-              "div",
-              { className: "col-md-8" },
-              React.createElement(
-                "ol",
-                null,
-                steps
-              )
-            ),
-            React.createElement(
-              "div",
-              { className: "col-sm-4" },
-              React.createElement(
-                "ul",
-                null,
-                ingredients
-              )
+              "ul",
+              null,
+              ingredients
             )
           )
-        ),
+        )
+      );
+      toggler = React.createElement(
+        "p",
+        { className: "text-center" },
         React.createElement(
-          "p",
-          { className: "text-center" },
-          React.createElement(
-            "a",
-            { onClick: this.showLess, href: "" },
-            "Show Less"
-          )
+          "a",
+          { onClick: this.showLess, href: "" },
+          "Show Less"
         )
       );
     } else {
-      return React.createElement(
-        "div",
-        { className: "panel panel-default" },
+      bodyContent = React.createElement(
+        "p",
+        null,
+        this.props.description
+      );
+
+      toggler = React.createElement(
+        "p",
+        { className: "text-center" },
         React.createElement(
-          "div",
-          { className: "panel-heading" },
-          this.props.title
-        ),
-        React.createElement(
-          "div",
-          { className: "panel-body" },
-          React.createElement(
-            "p",
-            null,
-            this.props.description
-          ),
-          React.createElement(
-            "p",
-            { className: "text-center" },
-            React.createElement(
-              "a",
-              { onClick: this.showMore, href: "" },
-              "Show More"
-            )
-          )
+          "a",
+          { onClick: this.showMore, href: "" },
+          "Show More"
         )
       );
     }
+
+    return React.createElement(
+      "div",
+      { className: "panel panel-default" },
+      React.createElement(
+        "div",
+        { className: "panel-heading" },
+        this.props.title
+      ),
+      React.createElement(
+        "div",
+        { className: "panel-body" },
+        bodyContent,
+        toggler
+      )
+    );
   }
 });
 "use strict";

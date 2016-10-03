@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 const recipeList = [
     {
         id: 0, 
-        title: "Chemex Coffe",
+        title: "Chemex Coffee",
         description: "Make a cup of chemex coffee, the proper way",
         ingredients: [
             "33g of coarse ground coffee",

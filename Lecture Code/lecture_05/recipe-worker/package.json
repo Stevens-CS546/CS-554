@@ -1,0 +1,15 @@
+{
+  "name": "recipe-worker",
+  "version": "1.0.0",
+  "description": "A worker role for our recipe creation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Phil Barresi",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^1.6.3",
+    "node-redis-pubsub": "^0.9.0"
+  }
+}
