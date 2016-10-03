@@ -95,7 +95,7 @@ const RecipeForm = React.createClass({
 
     },
     render() {
-        let newTitleText = `New Recipe: ${this.state.displayTitle || ''} (${this.state.ingredients.length} ingredients, ${this.state.steps.length} steps)`;
+        let newTitleText = `${this.state.title || 'New Recipe'}`;
 
         let errorBox = this.state.error
             ? (
@@ -104,105 +104,111 @@ const RecipeForm = React.createClass({
             : undefined;
 
         return (
-            <div className="recipe">
-                <h3>Add a New Recipe</h3>
-                <hr/>
-                <form onSubmit={this.addRecipe}>
-                    <h4>Recipe Info</h4>
-                    <div className="form-group">
-                        <label htmlFor="newTitle">Title</label>
-                        <input
-                            className="form-control"
-                            id="newTitle"
-                            placeholder="New Recipe"
-                            onChange={this.changeTitle}
-                            value={this.state.title}
-                            type="text"/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="newDescription">Description</label>
-                        <textarea
-                            className="form-control"
-                            id="newDescription"
-                            placeholder="Recipe description"
-                            onChange={this.changeDescription}></textarea>
-                    </div>
+            <div className="recipe row">
+                <div className="col-sm-6">
+                    <h3>Add a New Recipe</h3>
                     <hr/>
-                    <h4>Ingredient Info</h4>
-                    <div className="form-group">
-                        <label htmlFor="newIngredientText">New Ingredient</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            id="newIngredientText"
-                            placeholder="New Ingredient"
-                            value={this.state.newIngredient}
-                            onChange={this.changeNewIngredientText}/>
-                    </div>
-                    <div className="form-group">
-                        <div className="row">
-                            <div className="col-sm-3">
-                                <label htmlFor="newUnit" className="sr-only">New Quantity</label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    id="newUnit"
-                                    placeholder="Quantity"
-                                    value={this.state.newIngredientQuantity}
-                                    onChange={this.changeNewIngredientQuantity}/>
-                            </div>
-                            <div className="col-sm-3">
-                                <label htmlFor="newUnit" className="sr-only">New Unit</label>
-                                <select
-                                    id="newUnit"
-                                    className="form-control"
-                                    onChange={this.changeNewIngredientUnit}>
-                                    <option value="grams">Grams</option>
-                                    <option value="milligrams">Milligrams</option>
-                                    <option value="milliliters">Millileters</option>
-                                    <option value="ounces">Ounces</option>
-                                    <option value="pounds">Pounds</option>
-                                </select>
+                    <form onSubmit={this.addRecipe}>
+                        <h4>Recipe Info</h4>
+                        <div className="form-group">
+                            <label htmlFor="newTitle">Title</label>
+                            <input
+                                className="form-control"
+                                id="newTitle"
+                                placeholder="New Recipe"
+                                onChange={this.changeTitle}
+                                value={this.state.title}
+                                type="text"/>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="newDescription">Description</label>
+                            <textarea
+                                className="form-control"
+                                id="newDescription"
+                                placeholder="Recipe description"
+                                onChange={this.changeDescription}>{this.state.description}</textarea>
+                        </div>
+                        <hr/>
+                        <h4>Ingredient Info</h4>
+                        <div className="form-group">
+                            <label htmlFor="newIngredientText">New Ingredient</label>
+                            <input
+                                className="form-control"
+                                type="text"
+                                id="newIngredientText"
+                                placeholder="New Ingredient"
+                                value={this.state.newIngredient}
+                                onChange={this.changeNewIngredientText}/>
+                        </div>
+                        <div className="form-group">
+                            <div className="row">
+                                <div className="col-sm-6">
+                                    <label htmlFor="newUnit" className="sr-only">New Quantity</label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        id="newUnit"
+                                        placeholder="Quantity"
+                                        value={this.state.newIngredientQuantity}
+                                        onChange={this.changeNewIngredientQuantity}/>
+                                </div>
+                                <div className="col-sm-6">
+                                    <label htmlFor="newUnit" className="sr-only">New Unit</label>
+                                    <select
+                                        id="newUnit"
+                                        className="form-control"
+                                        onChange={this.changeNewIngredientUnit}>
+                                        <option value="grams">Grams</option>
+                                        <option value="milligrams">Milligrams</option>
+                                        <option value="milliliters">Millileters</option>
+                                        <option value="ounces">Ounces</option>
+                                        <option value="pounds">Pounds</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="newIngredientDescription">Description</label>
-                        <textarea
-                            className="form-control"
-                            id="newIngredientDescription"
-                            placeholder="Ingredient Info"
-                            value={this.newIngredientDescription}
-                            onChange={this.changeNewIngredientDescription}></textarea>
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary" type="button" onClick={this.addIngredient}>Add Ingredient</button>
-                    </div>
+                        <div className="form-group">
+                            <label htmlFor="newIngredientDescription">Description</label>
+                            <textarea
+                                className="form-control"
+                                id="newIngredientDescription"
+                                placeholder="Ingredient Info"
+                                value={this.state.newIngredientDescription}
+                                onChange={this.changeNewIngredientDescription}>{this.state.newIngredientDescription}</textarea>
+                        </div>
+                        <div className="form-group">
+                            <button className="btn btn-primary" type="button" onClick={this.addIngredient}>Add Ingredient</button>
+                        </div>
+                        <hr/>
+                        <h4>Steps</h4>
+                        <div className="form-group">
+                            <label htmlFor="newStepText">New Step</label>
+                            <textarea
+                                className="form-control"
+                                type="text"
+                                id="newIngredientText"
+                                placeholder="New Step Instructions"
+                                value={this.newStepText}
+                                onChange={this.changeStep}></textarea>
+                        </div>
+                        <div className="form-group">
+                            <button className="btn btn-primary" type="button" onClick={this.addStep}>Add Step</button>
+                        </div>
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-default">Add Recipe</button>
+                        </div>
+                    </form>
+                    {errorBox}
+                </div>
+                <div className="col-sm-6">
+                    <h3>Preview ({this.state.ingredients.length} ingredients, {this.state.steps.length} steps)</h3>
                     <hr/>
-                    <h4>Steps</h4>
-                    <div className="form-group">
-                        <label htmlFor="newStepText">New Step</label>
-                        <textarea
-                            className="form-control"
-                            type="text"
-                            id="newIngredientText"
-                            placeholder="New Step Instructions"
-                            value={this.newStepText}
-                            onChange={this.changeStep}></textarea>
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary" type="button" onClick={this.addStep}>Add Step</button>
-                    </div>
-                    <div className="form-group">
-                        <button type="submit" className="btn btn-default">Add Recipe</button>
-                    </div>
-                </form>
-                {errorBox}
-                <Recipe
-                    title={newTitleText}
-                    description={this.state.description}
-                    steps={this.state.steps}
-                    ingredients={this.state.ingredients}Recipe ></Recipe>
+                    <Recipe
+                        title={newTitleText}
+                        description={this.state.description}
+                        steps={this.state.steps}
+                        ingredients={this.state.ingredients}Recipe ></Recipe>
+                </div>
             </div>
         );
     }

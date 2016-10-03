@@ -15,8 +15,10 @@ const RecipeList = React.createClass({
             }
         });
     },
-    addNewRecipe() {
-        alert("list added a new recipe");
+    addNewRecipe(newRecipe) {
+        let recipes = this.state.recipes;
+        let newRecipeList = recipes.concat([newRecipe]);
+        this.setState({recipes: newRecipeList});
     },
     render: function () {
         let recipeList = this.state.recipes;
@@ -34,8 +36,8 @@ const RecipeList = React.createClass({
         return (
             <div className="recipe">
                 {recipes}
-                <hr />
-                <RecipeForm newRecipeUrl={this.props.url} onRecipeCreation={this.addNewRecipe} />
+                <hr/>
+                <RecipeForm newRecipeUrl={this.props.url} onRecipeCreation={this.addNewRecipe}/>
             </div>
         );
     }

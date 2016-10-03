@@ -239,7 +239,7 @@ var RecipeForm = React.createClass({
         });
     },
     render: function render() {
-        var newTitleText = "New Recipe: " + (this.state.displayTitle || '') + " (" + this.state.ingredients.length + " ingredients, " + this.state.steps.length + " steps)";
+        var newTitleText = "" + (this.state.title || 'New Recipe');
 
         var errorBox = this.state.error ? React.createElement(
             "div",
@@ -249,209 +249,235 @@ var RecipeForm = React.createClass({
 
         return React.createElement(
             "div",
-            { className: "recipe" },
+            { className: "recipe row" },
             React.createElement(
-                "h3",
-                null,
-                "Add a New Recipe"
-            ),
-            React.createElement("hr", null),
-            React.createElement(
-                "form",
-                { onSubmit: this.addRecipe },
+                "div",
+                { className: "col-sm-6" },
                 React.createElement(
-                    "h4",
+                    "h3",
                     null,
-                    "Recipe Info"
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "label",
-                        { htmlFor: "newTitle" },
-                        "Title"
-                    ),
-                    React.createElement("input", {
-                        className: "form-control",
-                        id: "newTitle",
-                        placeholder: "New Recipe",
-                        onChange: this.changeTitle,
-                        value: this.state.title,
-                        type: "text" })
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "label",
-                        { htmlFor: "newDescription" },
-                        "Description"
-                    ),
-                    React.createElement("textarea", {
-                        className: "form-control",
-                        id: "newDescription",
-                        placeholder: "Recipe description",
-                        onChange: this.changeDescription })
+                    "Add a New Recipe"
                 ),
                 React.createElement("hr", null),
                 React.createElement(
-                    "h4",
-                    null,
-                    "Ingredient Info"
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
+                    "form",
+                    { onSubmit: this.addRecipe },
                     React.createElement(
-                        "label",
-                        { htmlFor: "newIngredientText" },
-                        "New Ingredient"
+                        "h4",
+                        null,
+                        "Recipe Info"
                     ),
-                    React.createElement("input", {
-                        className: "form-control",
-                        type: "text",
-                        id: "newIngredientText",
-                        placeholder: "New Ingredient",
-                        value: this.state.newIngredient,
-                        onChange: this.changeNewIngredientText })
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
                     React.createElement(
                         "div",
-                        { className: "row" },
+                        { className: "form-group" },
                         React.createElement(
-                            "div",
-                            { className: "col-sm-3" },
-                            React.createElement(
-                                "label",
-                                { htmlFor: "newUnit", className: "sr-only" },
-                                "New Quantity"
-                            ),
-                            React.createElement("input", {
-                                className: "form-control",
-                                type: "text",
-                                id: "newUnit",
-                                placeholder: "Quantity",
-                                value: this.state.newIngredientQuantity,
-                                onChange: this.changeNewIngredientQuantity })
+                            "label",
+                            { htmlFor: "newTitle" },
+                            "Title"
+                        ),
+                        React.createElement("input", {
+                            className: "form-control",
+                            id: "newTitle",
+                            placeholder: "New Recipe",
+                            onChange: this.changeTitle,
+                            value: this.state.title,
+                            type: "text" })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "form-group" },
+                        React.createElement(
+                            "label",
+                            { htmlFor: "newDescription" },
+                            "Description"
                         ),
                         React.createElement(
+                            "textarea",
+                            {
+                                className: "form-control",
+                                id: "newDescription",
+                                placeholder: "Recipe description",
+                                onChange: this.changeDescription },
+                            this.state.description
+                        )
+                    ),
+                    React.createElement("hr", null),
+                    React.createElement(
+                        "h4",
+                        null,
+                        "Ingredient Info"
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "form-group" },
+                        React.createElement(
+                            "label",
+                            { htmlFor: "newIngredientText" },
+                            "New Ingredient"
+                        ),
+                        React.createElement("input", {
+                            className: "form-control",
+                            type: "text",
+                            id: "newIngredientText",
+                            placeholder: "New Ingredient",
+                            value: this.state.newIngredient,
+                            onChange: this.changeNewIngredientText })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "form-group" },
+                        React.createElement(
                             "div",
-                            { className: "col-sm-3" },
+                            { className: "row" },
                             React.createElement(
-                                "label",
-                                { htmlFor: "newUnit", className: "sr-only" },
-                                "New Unit"
+                                "div",
+                                { className: "col-sm-6" },
+                                React.createElement(
+                                    "label",
+                                    { htmlFor: "newUnit", className: "sr-only" },
+                                    "New Quantity"
+                                ),
+                                React.createElement("input", {
+                                    className: "form-control",
+                                    type: "text",
+                                    id: "newUnit",
+                                    placeholder: "Quantity",
+                                    value: this.state.newIngredientQuantity,
+                                    onChange: this.changeNewIngredientQuantity })
                             ),
                             React.createElement(
-                                "select",
-                                {
-                                    id: "newUnit",
-                                    className: "form-control",
-                                    onChange: this.changeNewIngredientUnit },
+                                "div",
+                                { className: "col-sm-6" },
                                 React.createElement(
-                                    "option",
-                                    { value: "grams" },
-                                    "Grams"
+                                    "label",
+                                    { htmlFor: "newUnit", className: "sr-only" },
+                                    "New Unit"
                                 ),
                                 React.createElement(
-                                    "option",
-                                    { value: "milligrams" },
-                                    "Milligrams"
-                                ),
-                                React.createElement(
-                                    "option",
-                                    { value: "milliliters" },
-                                    "Millileters"
-                                ),
-                                React.createElement(
-                                    "option",
-                                    { value: "ounces" },
-                                    "Ounces"
-                                ),
-                                React.createElement(
-                                    "option",
-                                    { value: "pounds" },
-                                    "Pounds"
+                                    "select",
+                                    {
+                                        id: "newUnit",
+                                        className: "form-control",
+                                        onChange: this.changeNewIngredientUnit },
+                                    React.createElement(
+                                        "option",
+                                        { value: "grams" },
+                                        "Grams"
+                                    ),
+                                    React.createElement(
+                                        "option",
+                                        { value: "milligrams" },
+                                        "Milligrams"
+                                    ),
+                                    React.createElement(
+                                        "option",
+                                        { value: "milliliters" },
+                                        "Millileters"
+                                    ),
+                                    React.createElement(
+                                        "option",
+                                        { value: "ounces" },
+                                        "Ounces"
+                                    ),
+                                    React.createElement(
+                                        "option",
+                                        { value: "pounds" },
+                                        "Pounds"
+                                    )
                                 )
                             )
                         )
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "label",
-                        { htmlFor: "newIngredientDescription" },
-                        "Description"
                     ),
-                    React.createElement("textarea", {
-                        className: "form-control",
-                        id: "newIngredientDescription",
-                        placeholder: "Ingredient Info",
-                        value: this.newIngredientDescription,
-                        onChange: this.changeNewIngredientDescription })
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
                     React.createElement(
-                        "button",
-                        { className: "btn btn-primary", type: "button", onClick: this.addIngredient },
-                        "Add Ingredient"
+                        "div",
+                        { className: "form-group" },
+                        React.createElement(
+                            "label",
+                            { htmlFor: "newIngredientDescription" },
+                            "Description"
+                        ),
+                        React.createElement(
+                            "textarea",
+                            {
+                                className: "form-control",
+                                id: "newIngredientDescription",
+                                placeholder: "Ingredient Info",
+                                value: this.state.newIngredientDescription,
+                                onChange: this.changeNewIngredientDescription },
+                            this.state.newIngredientDescription
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "form-group" },
+                        React.createElement(
+                            "button",
+                            { className: "btn btn-primary", type: "button", onClick: this.addIngredient },
+                            "Add Ingredient"
+                        )
+                    ),
+                    React.createElement("hr", null),
+                    React.createElement(
+                        "h4",
+                        null,
+                        "Steps"
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "form-group" },
+                        React.createElement(
+                            "label",
+                            { htmlFor: "newStepText" },
+                            "New Step"
+                        ),
+                        React.createElement("textarea", {
+                            className: "form-control",
+                            type: "text",
+                            id: "newIngredientText",
+                            placeholder: "New Step Instructions",
+                            value: this.newStepText,
+                            onChange: this.changeStep })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "form-group" },
+                        React.createElement(
+                            "button",
+                            { className: "btn btn-primary", type: "button", onClick: this.addStep },
+                            "Add Step"
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "form-group" },
+                        React.createElement(
+                            "button",
+                            { type: "submit", className: "btn btn-default" },
+                            "Add Recipe"
+                        )
                     )
+                ),
+                errorBox
+            ),
+            React.createElement(
+                "div",
+                { className: "col-sm-6" },
+                React.createElement(
+                    "h3",
+                    null,
+                    "Preview (",
+                    this.state.ingredients.length,
+                    " ingredients, ",
+                    this.state.steps.length,
+                    " steps)"
                 ),
                 React.createElement("hr", null),
-                React.createElement(
-                    "h4",
-                    null,
-                    "Steps"
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "label",
-                        { htmlFor: "newStepText" },
-                        "New Step"
-                    ),
-                    React.createElement("textarea", {
-                        className: "form-control",
-                        type: "text",
-                        id: "newIngredientText",
-                        placeholder: "New Step Instructions",
-                        value: this.newStepText,
-                        onChange: this.changeStep })
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "button",
-                        { className: "btn btn-primary", type: "button", onClick: this.addStep },
-                        "Add Step"
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "button",
-                        { type: "submit", className: "btn btn-default" },
-                        "Add Recipe"
-                    )
-                )
-            ),
-            errorBox,
-            React.createElement(Recipe, {
-                title: newTitleText,
-                description: this.state.description,
-                steps: this.state.steps,
-                ingredients: this.state.ingredients, Recipe: true })
+                React.createElement(Recipe, {
+                    title: newTitleText,
+                    description: this.state.description,
+                    steps: this.state.steps,
+                    ingredients: this.state.ingredients, Recipe: true })
+            )
         );
     }
 });
@@ -478,8 +504,10 @@ var RecipeList = React.createClass({
             }
         });
     },
-    addNewRecipe: function addNewRecipe() {
-        alert("list added a new recipe");
+    addNewRecipe: function addNewRecipe(newRecipe) {
+        var recipes = this.state.recipes;
+        var newRecipeList = recipes.concat([newRecipe]);
+        this.setState({ recipes: newRecipeList });
     },
 
     render: function render() {
