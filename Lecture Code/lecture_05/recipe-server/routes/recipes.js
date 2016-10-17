@@ -23,25 +23,24 @@ router.post("/", (req, res) => {
         .get("redis");
 
     let messageId = uuid.v4();
-    let handled = false;
     let killswitchTimeoutId = undefined;
-
-    redisConnection.emit(`create-recipe:${messageId}`, {
-        requestId: messageId,
-        recipe: newRecipe
-    });
 
     redisConnection.on(`recipe-created:${messageId}`, (insertedRecipe, channel) => {
         res.json(insertedRecipe);
         redisConnection.off(`recipe-created:${messageId}`);
+        redisConnection.off(`recipe-created-failed:${messageId}`);
 
         clearTimeout(killswitchTimeoutId);
     });
 
     redisConnection.on(`recipe-created-failed:${messageId}`, (error, channel) => {
-        res.status(500).json(channel);
+        res
+            .status(500)
+            .json(error);
 
         redisConnection.off(`recipe-created:${messageId}`);
+        redisConnection.off(`recipe-created-failed:${messageId}`);
+
         clearTimeout(killswitchTimeoutId);
     });
 
@@ -52,6 +51,11 @@ router.post("/", (req, res) => {
             .status(500)
             .json({error: "Timeout error"})
     }, 5000);
+
+    redisConnection.emit(`create-recipe:${messageId}`, {
+        requestId: messageId,
+        recipe: newRecipe
+    });
 
 });
 

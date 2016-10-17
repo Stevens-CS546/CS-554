@@ -19,7 +19,7 @@ redisConnection.on('create-recipe:*', (data, channel) => {
     let fullyComposeRecipe = recipeData
         .addRecipe(data.recipe)
         .then((newRecipe) => {
-            fetch(`${basePixabayUrl}${newRecipe.title}`).then((res) => {
+            return fetch(`${basePixabayUrl}${newRecipe.title}`).then((res) => {
                 return res.json();
             }).then((response) => {
                 return response
@@ -37,11 +37,9 @@ redisConnection.on('create-recipe:*', (data, channel) => {
                                 let recipeListExceptCurrent = recipeList.filter(x => x._id !== newRecipe._id);
 
                                 console.log(recipeListExceptCurrent);
-                                // Perform logic here
-                                // Go through entire recipe list
-                                // Calculate the percentage matched for each. 
-                                // Compose an array of data calls to setup the percentage matched
-                                // Add all, then resolve to recipeWithUrls
+                                // Perform logic here Go through entire recipe list Calculate the percentage
+                                // matched for each. Compose an array of data calls to setup the percentage
+                                // matched Add all, then resolve to recipeWithUrls
                                 return recipeWithUrls;
                             });
                     })

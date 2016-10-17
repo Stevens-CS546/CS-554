@@ -518,7 +518,10 @@ var RecipeList = React.createClass({
                 description: recipe.description,
                 id: recipe.id,
                 steps: recipe.steps,
-                ingredients: recipe.ingredients });
+                ingredients: recipe.ingredients,
+                displayImages: recipe.imageUrls,
+                relatedRecipes: recipe.relatedRecipes
+            });
         });
 
         return React.createElement(

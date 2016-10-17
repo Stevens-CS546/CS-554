@@ -29,7 +29,10 @@ const RecipeList = React.createClass({
                     description={recipe.description}
                     id={recipe.id}
                     steps={recipe.steps}
-                    ingredients={recipe.ingredients}></Recipe>
+                    ingredients={recipe.ingredients}
+                    displayImages={recipe.imageUrls}
+                    relatedRecipes={recipe.relatedRecipes}
+                    ></Recipe>
             );
         });
 
