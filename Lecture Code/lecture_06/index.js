@@ -13,7 +13,7 @@ const client = redis.createClient();
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
-let sayHello = client.setAsync("hello", "world");
+let sayHello = client.setAsync("hello", " FROM THE OTHER SIIIIIIIIIIDE");
 sayHello.then(() => {
     return client.getAsync("hello");
 }).then((hello) => {
