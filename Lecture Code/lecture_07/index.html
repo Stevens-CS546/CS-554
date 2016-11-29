@@ -21,9 +21,15 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var socket = io();
+      var temp = window.prompt("what is your nicknake?");
+      
+      const socket = io();
       $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
+        let message = {
+          text: $('#m').val()
+        };
+
+        socket.emit('chat message', message);
         $('#m').val('');
         return false;
       });
