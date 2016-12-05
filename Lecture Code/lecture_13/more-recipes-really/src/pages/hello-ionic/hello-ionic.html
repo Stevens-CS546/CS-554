@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Hello Class!</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <h3>Welcome, CS-554 students!</h3>
+
+  <p>
+    This starter project will allow you to see a few common Ionic patterns.
+  </p>
+  <p>
+    If you'd notice, the source for this page has an ion-header with an ion-navbar; that informs Ionic that if this is not the root page of the application to show a back button to navigate through the history backwards and go back to the previous component rendererd.
+  </p>
+  <p>
+    You may also notice the menuToggle attribute on the button in the ion-header; that will allow us to toggle the sidemenu, which is rendered in the app component.
+  </p>
+  <p>
+    Fun fact! The app component is still loaded, however Ionic navigates similar to a stack; it is simple on an entry somewhere below this one, waiting to be rendered again.
+  </p>
+  <p>
+    <button ion-button color="primary" menuToggle>Toggle Menu</button>
+  </p>
+
+</ion-content>

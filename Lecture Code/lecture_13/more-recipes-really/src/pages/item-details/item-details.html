@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle *ngIf="!shortRecipe">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Item Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="cards-bg">
+  <ion-card *ngIf="!fullRecipe">
+    <ion-card-header>
+      {{shortRecipe.title}}
+    </ion-card-header>
+    <ion-card-content>
+      {{shortRecipe.description}}
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="fullRecipe">
+    <ion-card>
+      <ion-card-header>
+        {{fullRecipe.title}}
+      </ion-card-header>
+      <img *ngIf="fullRecipe.imageStorageUrl" [src]="fullRecipe.imageStorageUrl" />
+      <ion-card-content>
+        <p>
+          {{fullRecipe.description}}
+        </p>
+        <h4>Ingredients</h4>
+        <ul>
+          <li *ngFor="let ingredient of fullRecipe.ingredients">{{ingredient.displayTitle}} ({{ingredient.quantity}} {{ingredient.unit}})<br/> <em>{{ingredient.description}}</em></li>
+        </ul>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngFor="let step of fullRecipe.steps; let stepNumber = index">
+      <ion-card-header>Step {{stepNumber + 1}}</ion-card-header>
+      <ion-card-content>
+        <p>{{step}}</p>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+
+</ion-content>
