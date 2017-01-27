@@ -1,6 +1,10 @@
 const constructorMethod = (app) => {
-    app.use("*", (req, res) => {
-        res.render("home", { pageTitle: "Advanced CSS3" });
+    app.use("/flex", (req, response) => {
+        response.render("flexbox", { pageTitle: "Flexbox Stuff" });
+    })
+
+    app.use("*", (req, response) => {
+        response.render("home", { pageTitle: "Advanced CSS3" });
     })
 };
 
