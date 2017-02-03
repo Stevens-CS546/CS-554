@@ -1,0 +1,12 @@
+@import "variables";
+
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    background: $body-background;
+    color: $brand-primary;
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-size: $primary-font-size;
+}
