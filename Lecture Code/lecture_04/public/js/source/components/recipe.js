@@ -1,23 +1,14 @@
 const Recipe = React.createClass({
   getInitialState: function () {
-    return {showingDetails: false};
+    return { showingDetails: false };
   },
   showMore(e) {
     e.preventDefault();
-    e.stopPropagation();
-    e
-      .nativeEvent
-      .stopImmediatePropagation();
-    this.setState({showingDetails: true});
+    this.setState({ showingDetails: true });
   },
   showLess(e) {
     e.preventDefault();
-    e.stopPropagation();
-    e
-      .nativeEvent
-      .stopImmediatePropagation();
-
-    this.setState({showingDetails: false});
+    this.setState({ showingDetails: false });
   },
   render() {
 

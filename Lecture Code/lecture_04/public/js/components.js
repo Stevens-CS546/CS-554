@@ -8,15 +8,10 @@ var Recipe = React.createClass({
   },
   showMore: function showMore(e) {
     e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
     this.setState({ showingDetails: true });
   },
   showLess: function showLess(e) {
     e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-
     this.setState({ showingDetails: false });
   },
   render: function render() {
@@ -139,7 +134,6 @@ var RecipeForm = React.createClass({
     },
     render: function render() {
         var newTitleText = "New Recipe: " + (this.state.title || '') + " (" + this.state.ingredients.length + " ingredients, " + this.state.steps.length + " steps)";
-        console.log(this.state);
 
         return React.createElement(
             "div",

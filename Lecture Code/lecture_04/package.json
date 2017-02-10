@@ -1,10 +1,10 @@
 {
   "name": "CS-554",
   "version": "1.0.0",
-  "description": "A small demo electron application",
+  "description": "A small demo react application",
   "main": "main.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "concurrently 'node app.js' 'gulp'"
   },
   "productName": "CS-554",
   "repository": {
@@ -36,6 +36,7 @@
   "dependencies": {
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
+    "concurrently": "^3.2.0",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.5",

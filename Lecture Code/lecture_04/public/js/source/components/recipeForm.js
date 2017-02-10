@@ -1,12 +1,12 @@
 const RecipeForm = React.createClass({
     getInitialState() {
-        return {title: "", description: "", steps: [], ingredients: [], newIngredient: ""};
+        return { title: "", description: "", steps: [], ingredients: [], newIngredient: "" };
     },
     changeTitle(e) {
-        this.setState({title: e.target.value});
+        this.setState({ title: e.target.value });
     },
     changeDescription(e) {
-        this.setState({description: e.target.value});
+        this.setState({ description: e.target.value });
     },
     addIngredient(e) {
         let ingredients = this
@@ -14,14 +14,13 @@ const RecipeForm = React.createClass({
             .ingredients
             .concat([this.state.newIngredient]);
 
-        this.setState({ingredients: ingredients, newIngredient: ""});
+        this.setState({ ingredients: ingredients, newIngredient: "" });
     },
     changeNewIngredientText(e) {
-        this.setState({newIngredient: e.target.value});
+        this.setState({ newIngredient: e.target.value });
     },
     render() {
         let newTitleText = `New Recipe: ${this.state.title || ''} (${this.state.ingredients.length} ingredients, ${this.state.steps.length} steps)`;
-        console.log(this.state);
 
         return (
             <div className="recipe">
@@ -36,7 +35,7 @@ const RecipeForm = React.createClass({
                                 placeholder="New Recipe"
                                 onChange={this.changeTitle}
                                 value={this.state.title}
-                                type="text"/>
+                                type="text" />
                         </div>
                     </div>
                     <div className="form-group">
@@ -59,7 +58,7 @@ const RecipeForm = React.createClass({
                                     id="newIngredientText"
                                     placeholder="New Ingredient"
                                     value={this.state.newIngredient}
-                                    onChange={this.changeNewIngredientText}/>
+                                    onChange={this.changeNewIngredientText} />
                                 <span className="input-group-btn">
                                     <button className="btn btn-primary" type="button" onClick={this.addIngredient}>Add Ingredient</button>
                                 </span>
@@ -92,7 +91,6 @@ const RecipeForm = React.createClass({
                     description={this.state.description}
                     steps={this.state.steps}
                     ingredients={this.state.ingredients}></Recipe>
-
             </div>
         );
     }

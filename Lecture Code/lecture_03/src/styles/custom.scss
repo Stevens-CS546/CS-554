@@ -9,4 +9,5 @@ body, html {
     color: $brand-primary;
     font-family: Georgia, Cambria, "Times New Roman", Times, serif;
     font-size: $primary-font-size;
+    background-clip: border-box;
 }

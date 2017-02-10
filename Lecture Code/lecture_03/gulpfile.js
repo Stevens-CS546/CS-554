@@ -24,7 +24,10 @@ gulp.task("sass", () => {
         .pipe(gulpSASS())
         .pipe(concatenate("styles.css"))
         .pipe(gulp.dest("./public/css/"))
-        .pipe(autoPrefix())
+        .pipe(autoPrefix({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
         .pipe(cleanCSS())
         .pipe(rename("styles.min.css"))
         .pipe(gulp.dest("./public/css/"));

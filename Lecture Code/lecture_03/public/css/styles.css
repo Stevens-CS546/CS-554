@@ -6005,4 +6005,5 @@ body, html {
   background: #FEFEFE;
   color: #333;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-  font-size: 20pt; }
+  font-size: 14pt;
+  background-clip: border-box; }
