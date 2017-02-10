@@ -15,10 +15,8 @@ var Recipe = React.createClass({
     this.setState({ showingDetails: false });
   },
   render: function render() {
-
     var bodyContent = undefined;
     var toggler = undefined;
-
     if (this.state.showingDetails) {
       var steps = this.props.steps.map(function (step) {
         return React.createElement(
@@ -77,10 +75,17 @@ var Recipe = React.createClass({
         )
       );
     } else {
+      var words = this.props.description.split(' ');
       bodyContent = React.createElement(
         "p",
         null,
-        this.props.description
+        words.slice(0, 35).join(" "),
+        words.length > 35 ? '... ' : undefined,
+        words.length > 35 ? React.createElement(
+          "a",
+          { onClick: this.showMore },
+          "read on"
+        ) : undefined
       );
 
       toggler = React.createElement(
@@ -89,7 +94,7 @@ var Recipe = React.createClass({
         React.createElement(
           "a",
           { onClick: this.showMore, href: "" },
-          "Show More"
+          "Show Details"
         )
       );
     }
@@ -297,6 +302,7 @@ var RecipeList = React.createClass({
         var recipeList = this.state.recipes;
         var recipes = recipeList.map(function (recipe) {
             return React.createElement(Recipe, {
+                key: recipe.id,
                 title: recipe.title,
                 description: recipe.description,
                 id: recipe.id,

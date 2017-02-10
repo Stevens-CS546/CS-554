@@ -90,7 +90,7 @@ const RecipeForm = React.createClass({
                     title={newTitleText}
                     description={this.state.description}
                     steps={this.state.steps}
-                    ingredients={this.state.ingredients}></Recipe>
+                    ingredients={this.state.ingredients} />
             </div>
         );
     }

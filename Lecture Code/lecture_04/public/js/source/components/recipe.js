@@ -11,10 +11,8 @@ const Recipe = React.createClass({
     this.setState({ showingDetails: false });
   },
   render() {
-
     let bodyContent = undefined;
     let toggler = undefined;
-
     if (this.state.showingDetails) {
       let steps = this
         .props
@@ -51,20 +49,23 @@ const Recipe = React.createClass({
       );
       toggler = (
         <p className="text-center">
-          <a onClick={this.showLess} href="">Show Less</a >
+          <a onClick={this.showLess} href="">Show Less</a>
         </p>
       );
 
     } else {
+      let words = this.props.description.split(' ');
       bodyContent = (
         <p>
-          {this.props.description}
+          {words.slice(0, 35).join(" ")}
+          {words.length > 35 ? '... ' : undefined}
+          {words.length > 35 ? <a onClick={this.showMore}>read on</a> : undefined}
         </p>
       );
 
       toggler = (
         <p className="text-center">
-          <a onClick={this.showMore} href="">Show More</a>
+          <a onClick={this.showMore} href="">Show Details</a>
         </p>
       );
     }

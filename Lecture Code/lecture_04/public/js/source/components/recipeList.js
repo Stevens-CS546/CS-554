@@ -20,11 +20,12 @@ const RecipeList = React.createClass({
         let recipes = recipeList.map((recipe) => {
             return (
                 <Recipe
+                    key={recipe.id}
                     title={recipe.title}
                     description={recipe.description}
                     id={recipe.id}
                     steps={recipe.steps}
-                    ingredients={recipe.ingredients}></Recipe>
+                    ingredients={recipe.ingredients} />
             );
         });
 

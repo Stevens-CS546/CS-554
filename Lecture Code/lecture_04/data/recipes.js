@@ -2,9 +2,9 @@ const Promise = require('bluebird');
 
 const recipeList = [
     {
-        id: 0, 
+        id: 0,
         title: "Chemex Coffee",
-        description: "Make a cup of chemex coffee, the proper way",
+        description: `Make a cup of chemex coffee, the proper way. The Chemex Coffeemaker is a manual, pour-over style glass-container coffeemaker that Peter Schlumbohm invented in 1941, and which continues to be manufactured by the Chemex Corporation in Chicopee, Massachusetts. In 1958, designers at the Illinois Institute of Technology said that the Chemex Coffeemaker is "one of the best- designed products of modern times", and so is included in the collection of the Museum of Modern Art in New York City.`,
         ingredients: [
             "33g of coarse ground coffee",
             "700g of water at 192 degrees",
