@@ -41,12 +41,9 @@ let exportedMethods = {
         return Promise.resolve(recipeList);
     },
     addRecipe(recipe) {
-        return Promise.resolve(() => {
-            let newRecipe = recipeList.push(recipe);
-            newRecipe.id = recipeList.length;
-
-            return newRecipe;
-        });
+        recipe.id = recipeList.length;
+        recipeList.push(recipe);
+        return Promise.resolve(recipe);
     }
 }
 
