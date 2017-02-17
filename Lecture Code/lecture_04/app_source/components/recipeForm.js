@@ -1,6 +1,11 @@
 const RecipeForm = React.createClass({
     getInitialState() {
-        return { title: "", description: "", steps: [], ingredients: [], newIngredient: "" };
+        return {
+            title: "",
+            description: "",
+            steps: [],
+            ingredients: [], newIngredient: ""
+        };
     },
     changeTitle(e) {
         this.setState({ title: e.target.value });

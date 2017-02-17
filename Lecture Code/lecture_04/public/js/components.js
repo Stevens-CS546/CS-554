@@ -1,46 +1,63 @@
 "use strict";
 
-var Recipe = React.createClass({
-  displayName: "Recipe",
+var AppComponent = function AppComponent() {
+    return React.createElement(
+        "div",
+        { className: "row" },
+        React.createElement(
+            "div",
+            { className: "col-sm-8" },
+            React.createElement(RecipeList, { url: "/recipes" })
+        ),
+        React.createElement(
+            "div",
+            { className: "col-sm-4" },
+            "Comment box goes here"
+        )
+    );
+};
+"use strict";
 
-  getInitialState: function getInitialState() {
-    return { showingDetails: false };
-  },
-  showMore: function showMore(e) {
-    e.preventDefault();
-    this.setState({ showingDetails: true });
-  },
-  showLess: function showLess(e) {
-    e.preventDefault();
-    this.setState({ showingDetails: false });
-  },
-  render: function render() {
-    var bodyContent = undefined;
-    var toggler = undefined;
-    if (this.state.showingDetails) {
-      var steps = this.props.steps.map(function (step) {
-        return React.createElement(
-          "li",
-          null,
-          step
-        );
-      });
+var Recipe = function Recipe(_ref) {
+  var steps = _ref.steps,
+      title = _ref.title,
+      description = _ref.description,
+      ingredients = _ref.ingredients;
 
-      var ingredients = this.props.ingredients.map(function (step) {
-        return React.createElement(
-          "li",
-          null,
-          step
-        );
-      });
+  var viewSteps = steps.map(function (step) {
+    return React.createElement(
+      "li",
+      null,
+      step
+    );
+  });
 
-      bodyContent = React.createElement(
+  var viewIngredients = ingredients.map(function (step) {
+    return React.createElement(
+      "li",
+      null,
+      step
+    );
+  });
+
+  return React.createElement(
+    "div",
+    { className: "panel panel-default" },
+    React.createElement(
+      "div",
+      { className: "panel-heading" },
+      title
+    ),
+    React.createElement(
+      "div",
+      { className: "panel-body" },
+      React.createElement(
         "div",
         null,
         React.createElement(
           "p",
           null,
-          this.props.description
+          description
         ),
         React.createElement(
           "div",
@@ -51,7 +68,7 @@ var Recipe = React.createClass({
             React.createElement(
               "ol",
               null,
-              steps
+              viewSteps
             )
           ),
           React.createElement(
@@ -60,68 +77,25 @@ var Recipe = React.createClass({
             React.createElement(
               "ul",
               null,
-              ingredients
+              viewIngredients
             )
           )
         )
-      );
-      toggler = React.createElement(
-        "p",
-        { className: "text-center" },
-        React.createElement(
-          "a",
-          { onClick: this.showLess, href: "" },
-          "Show Less"
-        )
-      );
-    } else {
-      var words = this.props.description.split(' ');
-      bodyContent = React.createElement(
-        "p",
-        null,
-        words.slice(0, 35).join(" "),
-        words.length > 35 ? '... ' : undefined,
-        words.length > 35 ? React.createElement(
-          "a",
-          { onClick: this.showMore },
-          "read on"
-        ) : undefined
-      );
-
-      toggler = React.createElement(
-        "p",
-        { className: "text-center" },
-        React.createElement(
-          "a",
-          { onClick: this.showMore, href: "" },
-          "Show Details"
-        )
-      );
-    }
-
-    return React.createElement(
-      "div",
-      { className: "panel panel-default" },
-      React.createElement(
-        "div",
-        { className: "panel-heading" },
-        this.props.title
-      ),
-      React.createElement(
-        "div",
-        { className: "panel-body" },
-        bodyContent,
-        toggler
       )
-    );
-  }
-});
+    )
+  );
+};
 "use strict";
 
 var RecipeForm = React.createClass({
     displayName: "RecipeForm",
     getInitialState: function getInitialState() {
-        return { title: "", description: "", steps: [], ingredients: [], newIngredient: "" };
+        return {
+            title: "",
+            description: "",
+            steps: [],
+            ingredients: [], newIngredient: ""
+        };
     },
     changeTitle: function changeTitle(e) {
         this.setState({ title: e.target.value });
@@ -319,5 +293,6 @@ var RecipeList = React.createClass({
         );
     }
 });
+'use strict';
 
-ReactDOM.render(React.createElement(RecipeList, { url: "/recipes" }), document.getElementById('content'));
+ReactDOM.render(React.createElement(AppComponent, null), document.getElementById('content'));
