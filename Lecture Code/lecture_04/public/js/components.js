@@ -7,15 +7,119 @@ var AppComponent = function AppComponent() {
         React.createElement(
             "div",
             { className: "col-sm-8" },
-            React.createElement(RecipeList, { url: "/recipes" })
+            React.createElement(RecipeContainer, { url: "/recipes" })
         ),
         React.createElement(
             "div",
             { className: "col-sm-4" },
-            "Comment box goes here"
+            React.createElement(CommentContainer, null)
         )
     );
 };
+"use strict";
+
+var CommentContainer = React.createClass({
+    displayName: "CommentContainer",
+    getInitialState: function getInitialState() {
+        return {
+            comments: [{
+                comment: "Hello",
+                commenter: "Phil"
+            }, {
+                comment: "This is awkward",
+                commenter: "Phil"
+            }, {
+                comment: "You're all staring at me",
+                commenter: "Phil"
+            }],
+            newComment: "",
+            commenterName: ""
+        };
+    },
+    handleCommentChange: function handleCommentChange(newText) {
+        this.setState({ newComment: newText });
+    },
+    handleCommentSubmission: function handleCommentSubmission(newComment, newCommenterName) {
+        if (!newComment) return;
+        if (!newCommenterName) return;
+
+        var commentList = this.state.comments;
+        var currentlyMatchingComment = commentList.filter(function (commentData) {
+            return commentData.comment === newComment && commentData.commenter === newCommenterName;
+        });
+
+        if (currentlyMatchingComment.length > 0) {
+            alert("Stop spamming");
+            return;
+        }
+
+        var newCommentObject = {
+            commenter: newCommenterName,
+            comment: newComment
+        };
+
+        this.setState({
+            comments: this.state.comments.concat(newCommentObject),
+            newComment: ""
+        });
+    },
+    handleCommentNameChange: function handleCommentNameChange(newCommenterName) {
+        if (!newCommenterName) return;
+
+        this.setState({
+            commenterName: newCommenterName
+        });
+    },
+    render: function render() {
+        return React.createElement(
+            "div",
+            null,
+            React.createElement(CommentList, { comments: this.state.comments }),
+            React.createElement(CommentForm, {
+                commenterName: this.state.commenterName,
+                comment: this.state.newComment,
+                onCommentChange: this.handleCommentChange,
+                onCommentSubmit: this.handleCommentSubmission,
+                onCommenterNameChange: this.handleCommentNameChange
+            })
+        );
+    }
+});
+"use strict";
+
+var RecipeContainer = React.createClass({
+    displayName: "RecipeContainer",
+
+    getInitialState: function getInitialState() {
+        return { recipes: [] };
+    },
+
+    componentDidMount: function componentDidMount() {
+        var _this = this;
+
+        $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            cache: false,
+            success: function success(recipeList) {
+                _this.setState({ recipes: recipeList });
+            },
+            error: function error(xhr, status, err) {
+                console.error(_this.props.url, status, err.toString());
+            }
+        });
+    },
+
+    render: function render() {
+        return React.createElement(
+            "div",
+            { className: "recipe" },
+            React.createElement(RecipeList, { recipes: this.state.recipes }),
+            React.createElement("hr", null),
+            React.createElement(RecipeForm, null)
+        );
+    }
+});
 "use strict";
 
 var Recipe = function Recipe(_ref) {
@@ -251,30 +355,92 @@ var RecipeForm = React.createClass({
 });
 "use strict";
 
-var RecipeList = React.createClass({
-    displayName: "RecipeList",
+var CommentForm = function CommentForm(_ref) {
+    var comment = _ref.comment,
+        onCommentChange = _ref.onCommentChange,
+        onCommentSubmit = _ref.onCommentSubmit,
+        commenterName = _ref.commenterName,
+        onCommenterNameChange = _ref.onCommenterNameChange;
 
-    getInitialState: function getInitialState() {
-        return { recipes: [] };
-    },
-    componentDidMount: function componentDidMount() {
-        var _this = this;
+    return React.createElement(
+        "form",
+        {
+            onSubmit: function onSubmit(e) {
+                e.preventDefault();
+                onCommentSubmit(comment, commenterName);
+            } },
+        React.createElement(
+            "div",
+            { className: "form-group" },
+            React.createElement(
+                "label",
+                { className: "input-control" },
+                "Comment"
+            ),
+            React.createElement("input", {
+                type: "text",
+                value: comment,
+                onChange: function onChange(e) {
+                    onCommentChange(e.target.value);
+                },
+                className: "form-control" })
+        ),
+        React.createElement(
+            "div",
+            { className: "form-group" },
+            React.createElement(
+                "label",
+                { className: "input-control" },
+                "Your Name"
+            ),
+            React.createElement("input", {
+                type: "text",
+                value: commenterName,
+                onChange: function onChange(e) {
+                    onCommenterNameChange(e.target.value);
+                },
+                className: "form-control" })
+        ),
+        React.createElement(
+            "div",
+            { className: "form-group" },
+            React.createElement(
+                "button",
+                { type: "submit", className: "btn btn-primary" },
+                "Submit"
+            )
+        )
+    );
+};
+"use strict";
 
-        $.ajax({
-            url: this.props.url,
-            dataType: 'json',
-            cache: false,
-            success: function success(recipeList) {
-                _this.setState({ recipes: recipeList });
-            },
-            error: function error(xhr, status, err) {
-                console.error(_this.props.url, status, err.toString());
-            }
-        });
-    },
-    render: function render() {
-        var recipeList = this.state.recipes;
-        var recipes = recipeList.map(function (recipe) {
+var CommentList = function CommentList(_ref) {
+    var comments = _ref.comments;
+
+    return React.createElement(
+        "ul",
+        { className: "list-unstyled" },
+        comments.map(function (commentData) {
+            return React.createElement(
+                "li",
+                null,
+                "[",
+                commentData.commenter,
+                "]: ",
+                commentData.comment
+            );
+        })
+    );
+};
+"use strict";
+
+var RecipeList = function RecipeList(_ref) {
+    var recipes = _ref.recipes;
+
+    return React.createElement(
+        "div",
+        null,
+        recipes.map(function (recipe) {
             return React.createElement(Recipe, {
                 key: recipe.id,
                 title: recipe.title,
@@ -282,17 +448,9 @@ var RecipeList = React.createClass({
                 id: recipe.id,
                 steps: recipe.steps,
                 ingredients: recipe.ingredients });
-        });
-
-        return React.createElement(
-            "div",
-            { className: "recipe" },
-            recipes,
-            React.createElement("hr", null),
-            React.createElement(RecipeForm, null)
-        );
-    }
-});
+        })
+    );
+};
 'use strict';
 
 ReactDOM.render(React.createElement(AppComponent, null), document.getElementById('content'));

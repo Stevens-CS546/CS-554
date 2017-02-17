@@ -1,7 +1,8 @@
-const RecipeList = React.createClass({
+const RecipeContainer = React.createClass({
     getInitialState: function () {
         return {recipes: []};
     },
+    
     componentDidMount: function () {
         $.ajax({
             url: this.props.url,
@@ -15,23 +16,11 @@ const RecipeList = React.createClass({
             }
         });
     },
+    
     render: function () {
-        let recipeList = this.state.recipes;
-        let recipes = recipeList.map((recipe) => {
-            return (
-                <Recipe
-                    key={recipe.id}
-                    title={recipe.title}
-                    description={recipe.description}
-                    id={recipe.id}
-                    steps={recipe.steps}
-                    ingredients={recipe.ingredients} />
-            );
-        });
-
         return (
             <div className="recipe">
-                {recipes}
+                <RecipeList recipes={this.state.recipes} />
                 <hr />
                 <RecipeForm/>
             </div>
