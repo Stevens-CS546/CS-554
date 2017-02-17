@@ -4,7 +4,7 @@
   "description": "A small demo react application",
   "main": "main.js",
   "scripts": {
-    "start": "concurrently 'node app.js' 'gulp'"
+    "start": "concurrently \"node app.js\" \"gulp\""
   },
   "productName": "CS-554",
   "repository": {
