@@ -1,22 +1,35 @@
 const CommentContainer = React.createClass({
     getInitialState() {
         return {
-            comments: [
-                {
-                    comment: "Hello",
-                    commenter: "Phil"
-                },
-                {
-                    comment: "This is awkward",
-                    commenter: "Phil"
-                },
-                {
-                    comment: "You're all staring at me",
-                    commenter: "Phil"
-                }],
+            comments: [],
             newComment: "",
-            commenterName: ""
+            commenterName: "",
+            error: ""
         }
+    },
+
+    loadComments() {
+        return $.get("/comments");
+    },
+
+    addComment(commenter, comment) {
+        return $.ajax({
+            url: "/comments",
+            dataType: "json",
+            contentType: "application/json",
+            method: "POST",
+            data: JSON.stringify({
+                comment: {
+                    commenter, comment
+                }
+            })
+        });
+    },
+
+    componentDidMount() {
+        this.loadComments().then((commentList) => {
+            this.setState({ comments: commentList });
+        })
     },
 
     handleCommentChange(newText) {
@@ -24,27 +37,38 @@ const CommentContainer = React.createClass({
     },
 
     handleCommentSubmission(newComment, newCommenterName) {
-        if (!newComment) return;
-        if (!newCommenterName) return;
+        if (!newComment) {
+            this.setState({ error: "No comment provided" });
+            return;
+        };
+
+        if (!newCommenterName) {
+            this.setState({ error: "No comment name provided" });
+            return;
+        };
 
         let commentList = this.state.comments;
         let currentlyMatchingComment = commentList.filter(commentData => {
             return commentData.comment === newComment && commentData.commenter === newCommenterName;
         });
 
-        if(currentlyMatchingComment.length > 0) {
-            alert("Stop spamming");
+        if (currentlyMatchingComment.length > 0) {
+            this.setState({ error: "No spamming allowed" });
             return;
         }
 
-        let newCommentObject = {
-            commenter: newCommenterName,
-            comment: newComment
-        };
+        this.setState({ error: "" });
 
         this.setState({
-            comments: this.state.comments.concat(newCommentObject),
             newComment: ""
+        });
+
+        this.addComment(newCommenterName, newComment).then((newCommentObject) => {
+            this.setState({
+                comments: this.state.comments.concat(newCommentObject),
+            });
+        }, (error) => {
+            this.setState({ error: JSON.stringify(error) });
         });
     },
 
@@ -65,6 +89,7 @@ const CommentContainer = React.createClass({
                 onCommentChange={this.handleCommentChange}
                 onCommentSubmit={this.handleCommentSubmission}
                 onCommenterNameChange={this.handleCommentNameChange}
+                formError={this.state.error}
             />
         </div>
     }

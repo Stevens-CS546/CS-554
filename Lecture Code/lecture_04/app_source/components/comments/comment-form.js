@@ -4,8 +4,12 @@ const CommentForm = (
         onCommentChange,
         onCommentSubmit,
         commenterName,
-        onCommenterNameChange
+        onCommenterNameChange,
+        formError
     }) => {
+
+    let visibleFormError = formError ? <div className="alert alert-danger">{formError}</div> : undefined;
+
     return <form
         onSubmit={(e) => {
             e.preventDefault();
@@ -37,5 +41,8 @@ const CommentForm = (
         <div className="form-group">
             <button type="submit" className="btn btn-primary">Submit</button>
         </div>
+
+        {visibleFormError}
+
     </form>
 };

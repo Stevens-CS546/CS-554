@@ -22,26 +22,50 @@ var CommentContainer = React.createClass({
     displayName: "CommentContainer",
     getInitialState: function getInitialState() {
         return {
-            comments: [{
-                comment: "Hello",
-                commenter: "Phil"
-            }, {
-                comment: "This is awkward",
-                commenter: "Phil"
-            }, {
-                comment: "You're all staring at me",
-                commenter: "Phil"
-            }],
+            comments: [],
             newComment: "",
-            commenterName: ""
+            commenterName: "",
+            error: ""
         };
+    },
+    loadComments: function loadComments() {
+        return $.get("/comments");
+    },
+    addComment: function addComment(commenter, comment) {
+        return $.ajax({
+            url: "/comments",
+            dataType: "json",
+            contentType: "application/json",
+            method: "POST",
+            data: JSON.stringify({
+                comment: {
+                    commenter: commenter, comment: comment
+                }
+            })
+        });
+    },
+    componentDidMount: function componentDidMount() {
+        var _this = this;
+
+        this.loadComments().then(function (commentList) {
+            _this.setState({ comments: commentList });
+        });
     },
     handleCommentChange: function handleCommentChange(newText) {
         this.setState({ newComment: newText });
     },
     handleCommentSubmission: function handleCommentSubmission(newComment, newCommenterName) {
-        if (!newComment) return;
-        if (!newCommenterName) return;
+        var _this2 = this;
+
+        if (!newComment) {
+            this.setState({ error: "No comment provided" });
+            return;
+        };
+
+        if (!newCommenterName) {
+            this.setState({ error: "No comment name provided" });
+            return;
+        };
 
         var commentList = this.state.comments;
         var currentlyMatchingComment = commentList.filter(function (commentData) {
@@ -49,18 +73,22 @@ var CommentContainer = React.createClass({
         });
 
         if (currentlyMatchingComment.length > 0) {
-            alert("Stop spamming");
+            this.setState({ error: "No spamming allowed" });
             return;
         }
 
-        var newCommentObject = {
-            commenter: newCommenterName,
-            comment: newComment
-        };
+        this.setState({ error: "" });
 
         this.setState({
-            comments: this.state.comments.concat(newCommentObject),
             newComment: ""
+        });
+
+        this.addComment(newCommenterName, newComment).then(function (newCommentObject) {
+            _this2.setState({
+                comments: _this2.state.comments.concat(newCommentObject)
+            });
+        }, function (error) {
+            _this2.setState({ error: JSON.stringify(error) });
         });
     },
     handleCommentNameChange: function handleCommentNameChange(newCommenterName) {
@@ -80,7 +108,8 @@ var CommentContainer = React.createClass({
                 comment: this.state.newComment,
                 onCommentChange: this.handleCommentChange,
                 onCommentSubmit: this.handleCommentSubmission,
-                onCommenterNameChange: this.handleCommentNameChange
+                onCommenterNameChange: this.handleCommentNameChange,
+                formError: this.state.error
             })
         );
     }
@@ -360,7 +389,15 @@ var CommentForm = function CommentForm(_ref) {
         onCommentChange = _ref.onCommentChange,
         onCommentSubmit = _ref.onCommentSubmit,
         commenterName = _ref.commenterName,
-        onCommenterNameChange = _ref.onCommenterNameChange;
+        onCommenterNameChange = _ref.onCommenterNameChange,
+        formError = _ref.formError;
+
+
+    var visibleFormError = formError ? React.createElement(
+        "div",
+        { className: "alert alert-danger" },
+        formError
+    ) : undefined;
 
     return React.createElement(
         "form",
@@ -409,7 +446,8 @@ var CommentForm = function CommentForm(_ref) {
                 { type: "submit", className: "btn btn-primary" },
                 "Submit"
             )
-        )
+        ),
+        visibleFormError
     );
 };
 "use strict";
