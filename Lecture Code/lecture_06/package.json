@@ -9,9 +9,10 @@
   "author": "Phil Barresi",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.4.6",
+    "bluebird": "^3.4.7",
     "express": "^4.14.1",
     "flat": "^2.0.1",
-    "node-redis": "^0.1.7"
+    "node-redis": "^0.1.7",
+    "redis": "^2.6.5"
   }
 }

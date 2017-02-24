@@ -9,9 +9,20 @@ const makeTestPromise = () => {
     })
 };
 
-app.use("/", async (req, res) => {
-    let result = await makeTestPromise();
-    res.json(result);
+app.get("/old", (req, res) => {
+    let makeTestPromiseResult = makeTestPromise();
+
+    makeTestPromiseResult.then((result) => {
+        res.json(result);
+    });
+})
+
+app.get("/", async (req, res) => {
+    let result = makeTestPromise();
+    let secondResult = makeTestPromise();
+    let bothResults = await (Promise.all([result, secondResult]));
+
+    res.json(bothResults);
 })
 
 app.listen(3000, () => {
