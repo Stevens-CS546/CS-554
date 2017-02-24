@@ -21,8 +21,7 @@ const main = async () => {
     let setResult = await client.setAsync("goodnight", "moon");
     console.log(setResult);
 
-    let batchResult = await client
-        .multi()
+    let batchResult = await client.multi()
         .set("favoriteDrink", "coffee")
         .set("favoriteFood", "steak")
         .set("cake", "is a lie")
@@ -48,7 +47,20 @@ const main = async () => {
             test: "TO CATCH THEM IS MY REAL TEST -- ",
             cause: "TO TRAIN THEM IS MY CAUUUUUSE!"
         },
-        age: 23
+        hobbies: [
+            "making coffee",
+            "making low carb recipes",
+            "soccer"
+        ],
+        "education.college": {
+            "name": "Stevens"
+        },
+        "hobbiesAsObject[]": {
+            "0": "making coffee",
+            "1": "making low carb recipes",
+            "sport": "soccer"
+        },
+        age: 24
     };
 
     let flatBio = flat(bio);
