@@ -1,48 +1,43 @@
 const bluebird = require("bluebird");
-const NRP = require('node-redis-pubsub');
 const flat = require("flat");
 const unflatten = flat.unflatten
-const config = {
-    port: 6379, // Port of your locally running Redis server
-    scope: 'recipes' // Use a scope to prevent two NRPs from sharing messages
-};
-
 const redis = require('redis');
 const client = redis.createClient();
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
-let sayHello = client.setAsync("hello", " FROM THE OTHER SIIIIIIIIIIDE");
-sayHello.then(() => {
-    return client.getAsync("hello");
-}).then((hello) => {
+const main = async () => {
+    let sayHello = await client.setAsync("hello", " FROM THE OTHER SIIIIIIIIIIDE");
+    let hello = await client.getAsync("hello");
     console.log(`hello, ${hello}`);
-    return client.existsAsync("hello");
-}).then((doesHelloExist) => {
+
+    let doesHelloExist = await client.existsAsync("hello");
     console.log(`doesHelloExist ? ${doesHelloExist === 1}`);
-    return client.existsAsync("pikachu");
-}).then((doesPikachuExist) => {
+
+    let doesPikachuExist = await client.existsAsync("pikachu");
     console.log(`doesPikachuExist ? ${doesPikachuExist === 1}`);
-    return client.setAsync("goodnight", "moon");
-}).then((setResult) => {
-    // batch operations transaction
-    return client
+
+    let setResult = await client.setAsync("goodnight", "moon");
+    console.log(setResult);
+
+    let batchResult = await client
         .multi()
         .set("favoriteDrink", "coffee")
         .set("favoriteFood", "steak")
         .set("cake", "is a lie")
         .execAsync();
-}).then(() => {
-    // not batched, just multiple getting
-    return client.mgetAsync("favoriteDrink", "favoriteFood", "cake", "goodnight", "hello");
-}).then((result) => {
-    console.log(result);
-    return client.delAsync("hello");
-}).then(() => {
-    return client.existsAsync("hello");
-}).then((doesHelloExist) => {
+    console.log(batchResult);
+
+    let multiResult = await client.mgetAsync("favoriteDrink", "favoriteFood", "cake", "goodnight", "hello");;
+    console.log(multiResult);
+
+    let deleteHello = await client.delAsync("hello");
+    console.log(deleteHello);
+
+    doesHelloExist = await client.existsAsync("hello");
     console.log(`doesHelloExist ? ${doesHelloExist === 1}`);
+
     let bio = {
         name: {
             first: "Phil",
@@ -57,16 +52,17 @@ sayHello.then(() => {
     };
 
     let flatBio = flat(bio);
-    return client.hmsetAsync("bio", flatBio)
-}).then(() => {
-    return client.hincrbyAsync("bio", "age", 1);
-}).then(() => {
-    return client.hgetallAsync("bio")
-}).then((flatBio) => {
-    // oh no, 24 is for some reason a string!
-    return unflatten(flatBio)
-}).then((bio) => {
-    console.log(bio);
-}).catch((e) => {
-    console.log(e);
-})
+    let hmSetAsyncBio = await client.hmsetAsync("bio", flatBio);
+    console.log(hmSetAsyncBio);
+
+    let incrAge = await client.hincrbyAsync("bio", "age", 1);
+    console.log(incrAge);
+
+    let flatBioFromRedis = await client.hgetallAsync("bio");
+    console.log(flatBioFromRedis);
+
+    let remadeBio = unflatten(flatBioFromRedis);
+    console.log(remadeBio);
+}
+
+main();
