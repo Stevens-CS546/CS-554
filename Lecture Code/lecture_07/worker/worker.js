@@ -1,6 +1,6 @@
 const redisConnection = require("./redis-connection");
 
-redisConnection.on('send-message:request*', (message, channel) => {
+redisConnection.on('send-message:request:*', (message, channel) => {
     let messageText = message.data.message;
     console.log("\n\n\n=================")
     console.log("We've received a message from the API server! It's:");
