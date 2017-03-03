@@ -1,0 +1,15 @@
+{
+  "name": "simple-worker",
+  "version": "1.0.0",
+  "description": "a test simple worker",
+  "main": "index.js",
+  "scripts": {
+    "start": "node worker.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "node-redis-pubsub": "^1.0.2"
+  }
+}

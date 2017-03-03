@@ -1,5 +1,11 @@
+const bluebird = require("bluebird");
 const express = require("express");
 const app = express();
+const redis = require('redis');
+const client = redis.createClient();
+
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
 
 const makeTestPromise = () => {
     return new Promise((fulfill, reject) => {
@@ -17,12 +23,23 @@ app.get("/old", (req, res) => {
     });
 })
 
+app.get("/", async (req, res, next) => {
+    let cacheForHomePageExists = await client.getAsync("homePage");
+    if (cacheForHomePageExists) {
+        res.send(cacheForHomePageExists);
+    } else {
+        next();
+    }
+})
+
 app.get("/", async (req, res) => {
     let result = makeTestPromise();
     let secondResult = makeTestPromise();
     let bothResults = await (Promise.all([result, secondResult]));
 
     res.json(bothResults);
+    let cachedForHomePage = await client.setAsync("homePage", JSON.stringify(bothResults));
+
 })
 
 app.listen(3000, () => {
