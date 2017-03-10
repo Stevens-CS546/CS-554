@@ -1,7 +1,6 @@
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-
 const chat = io.of("/chat");
 const usersToSocket = {};
 
@@ -10,10 +9,11 @@ app.get('/', (req, res) => {
 });
 
 chat.on('connection', (socket) => {
-  socket.join('general'); // join the general room.
+  socket.on('join-room', (data) => {
+    socket.leave(data.previousRoom);
+    socket.join(data.newRoom);
 
-  socket.on('join-room', (roomId) => {
-    socket.join(roomId);
+    socket.emit("joined-room", data.newRoom);
   });
 
   socket.on('direct message', (msg) => {
@@ -27,8 +27,8 @@ chat.on('connection', (socket) => {
     usersToSocket[connectionInfo.nickname] = socket;
   });
 
-  socket.on('chat message', (msg) => {
-    chat.emit('chat message', msg.text);
+  socket.on('send-message', (msg) => {
+    chat.to(msg.room).emit('receive-message', msg.text);
   });
 
   socket.emit('request-credentials');
