@@ -1,9 +1,9 @@
-const Recipe = ({steps, title, description, ingredients}) => {
-  let viewSteps = steps.map((step) => {
+const Recipe = ({ steps, title, description, ingredients }) => {
+  let viewSteps = steps.map(step => {
     return <li>{step}</li>;
   });
 
-  let viewIngredients = ingredients.map((step) => {
+  let viewIngredients = ingredients.map(step => {
     return <li>{step}</li>;
   });
 

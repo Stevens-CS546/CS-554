@@ -1,118 +1,119 @@
 "use strict";
 
 var AppComponent = function AppComponent() {
-    return React.createElement(
-        "div",
-        { className: "row" },
-        React.createElement(
-            "div",
-            { className: "col-sm-8" },
-            React.createElement(RecipeContainer, { url: "/recipes" })
-        ),
-        React.createElement(
-            "div",
-            { className: "col-sm-4" },
-            React.createElement(CommentContainer, null)
-        )
-    );
+  return React.createElement(
+    "div",
+    { className: "row" },
+    React.createElement(
+      "div",
+      { className: "col-sm-8" },
+      React.createElement(RecipeContainer, { url: "/recipes" })
+    ),
+    React.createElement(
+      "div",
+      { className: "col-sm-4" },
+      React.createElement(CommentContainer, null)
+    )
+  );
 };
 "use strict";
 
 var CommentContainer = React.createClass({
-    displayName: "CommentContainer",
-    getInitialState: function getInitialState() {
-        return {
-            comments: [],
-            newComment: "",
-            commenterName: "",
-            error: ""
-        };
-    },
-    loadComments: function loadComments() {
-        return $.get("/comments");
-    },
-    addComment: function addComment(commenter, comment) {
-        return $.ajax({
-            url: "/comments",
-            dataType: "json",
-            contentType: "application/json",
-            method: "POST",
-            data: JSON.stringify({
-                comment: {
-                    commenter: commenter, comment: comment
-                }
-            })
-        });
-    },
-    componentDidMount: function componentDidMount() {
-        var _this = this;
-
-        this.loadComments().then(function (commentList) {
-            _this.setState({ comments: commentList });
-        });
-    },
-    handleCommentChange: function handleCommentChange(newText) {
-        this.setState({ newComment: newText });
-    },
-    handleCommentSubmission: function handleCommentSubmission(newComment, newCommenterName) {
-        var _this2 = this;
-
-        if (!newComment) {
-            this.setState({ error: "No comment provided" });
-            return;
-        };
-
-        if (!newCommenterName) {
-            this.setState({ error: "No comment name provided" });
-            return;
-        };
-
-        var commentList = this.state.comments;
-        var currentlyMatchingComment = commentList.filter(function (commentData) {
-            return commentData.comment === newComment && commentData.commenter === newCommenterName;
-        });
-
-        if (currentlyMatchingComment.length > 0) {
-            this.setState({ error: "No spamming allowed" });
-            return;
+  displayName: "CommentContainer",
+  getInitialState: function getInitialState() {
+    return {
+      comments: [],
+      newComment: "",
+      commenterName: "",
+      error: ""
+    };
+  },
+  loadComments: function loadComments() {
+    return $.get("/comments");
+  },
+  addComment: function addComment(commenter, comment) {
+    return $.ajax({
+      url: "/comments",
+      dataType: "json",
+      contentType: "application/json",
+      method: "POST",
+      data: JSON.stringify({
+        comment: {
+          commenter: commenter,
+          comment: comment
         }
+      })
+    });
+  },
+  componentDidMount: function componentDidMount() {
+    var _this = this;
 
-        this.setState({ error: "" });
+    this.loadComments().then(function (commentList) {
+      _this.setState({ comments: commentList });
+    });
+  },
+  handleCommentChange: function handleCommentChange(newText) {
+    this.setState({ newComment: newText });
+  },
+  handleCommentSubmission: function handleCommentSubmission(newComment, newCommenterName) {
+    var _this2 = this;
 
-        this.setState({
-            newComment: ""
-        });
-
-        this.addComment(newCommenterName, newComment).then(function (newCommentObject) {
-            _this2.setState({
-                comments: _this2.state.comments.concat(newCommentObject)
-            });
-        }, function (error) {
-            _this2.setState({ error: JSON.stringify(error) });
-        });
-    },
-    handleCommentNameChange: function handleCommentNameChange(newCommenterName) {
-        if (!newCommenterName) return;
-
-        this.setState({
-            commenterName: newCommenterName
-        });
-    },
-    render: function render() {
-        return React.createElement(
-            "div",
-            null,
-            React.createElement(CommentList, { comments: this.state.comments }),
-            React.createElement(CommentForm, {
-                commenterName: this.state.commenterName,
-                comment: this.state.newComment,
-                onCommentChange: this.handleCommentChange,
-                onCommentSubmit: this.handleCommentSubmission,
-                onCommenterNameChange: this.handleCommentNameChange,
-                formError: this.state.error
-            })
-        );
+    if (!newComment) {
+      this.setState({ error: "No comment provided" });
+      return;
     }
+
+    if (!newCommenterName) {
+      this.setState({ error: "No comment name provided" });
+      return;
+    }
+
+    var commentList = this.state.comments;
+    var currentlyMatchingComment = commentList.filter(function (commentData) {
+      return commentData.comment === newComment && commentData.commenter === newCommenterName;
+    });
+
+    if (currentlyMatchingComment.length > 0) {
+      this.setState({ error: "No spamming allowed" });
+      return;
+    }
+
+    this.setState({ error: "" });
+
+    this.setState({
+      newComment: ""
+    });
+
+    this.addComment(newCommenterName, newComment).then(function (newCommentObject) {
+      _this2.setState({
+        comments: _this2.state.comments.concat(newCommentObject)
+      });
+    }, function (error) {
+      _this2.setState({ error: JSON.stringify(error) });
+    });
+  },
+  handleCommentNameChange: function handleCommentNameChange(newCommenterName) {
+    if (!newCommenterName) return;
+
+    this.setState({
+      commenterName: newCommenterName
+    });
+  },
+  render: function render() {
+    return React.createElement(
+      "div",
+      null,
+      React.createElement(CommentList, { comments: this.state.comments }),
+      React.createElement(CommentForm, {
+        commenterName: this.state.commenterName,
+        comment: this.state.newComment,
+        onCommentChange: this.handleCommentChange,
+        onCommentSubmit: this.handleCommentSubmission,
+        onCommenterNameChange: this.handleCommentNameChange,
+        formError: this.state.error
+      })
+    );
+  }
 });
 "use strict";
 
@@ -221,254 +222,269 @@ var Recipe = function Recipe(_ref) {
 "use strict";
 
 var RecipeForm = React.createClass({
-    displayName: "RecipeForm",
-    getInitialState: function getInitialState() {
-        return {
-            title: "",
-            description: "",
-            steps: [],
-            ingredients: [], newIngredient: ""
-        };
-    },
-    changeTitle: function changeTitle(e) {
-        this.setState({ title: e.target.value });
-    },
-    changeDescription: function changeDescription(e) {
-        this.setState({ description: e.target.value });
-    },
-    addIngredient: function addIngredient(e) {
-        var ingredients = this.state.ingredients.concat([this.state.newIngredient]);
+  displayName: "RecipeForm",
+  getInitialState: function getInitialState() {
+    return {
+      title: "",
+      description: "",
+      steps: [],
+      ingredients: [],
+      newIngredient: ""
+    };
+  },
+  changeTitle: function changeTitle(e) {
+    this.setState({ title: e.target.value });
+  },
+  changeDescription: function changeDescription(e) {
+    this.setState({ description: e.target.value });
+  },
+  addIngredient: function addIngredient(e) {
+    var ingredients = this.state.ingredients.concat([this.state.newIngredient]);
 
-        this.setState({ ingredients: ingredients, newIngredient: "" });
-    },
-    changeNewIngredientText: function changeNewIngredientText(e) {
-        this.setState({ newIngredient: e.target.value });
-    },
-    render: function render() {
-        var newTitleText = "New Recipe: " + (this.state.title || '') + " (" + this.state.ingredients.length + " ingredients, " + this.state.steps.length + " steps)";
+    this.setState({ ingredients: ingredients, newIngredient: "" });
+  },
+  changeNewIngredientText: function changeNewIngredientText(e) {
+    this.setState({ newIngredient: e.target.value });
+  },
+  render: function render() {
+    var newTitleText = "New Recipe: " + (this.state.title || "") + " (" + this.state.ingredients.length + " ingredients, " + this.state.steps.length + " steps)";
 
-        return React.createElement(
+    return React.createElement(
+      "div",
+      { className: "recipe" },
+      React.createElement(
+        "h3",
+        null,
+        "Add a New Recipe"
+      ),
+      React.createElement(
+        "div",
+        { className: "form-horizontal" },
+        React.createElement(
+          "div",
+          { className: "form-group" },
+          React.createElement(
+            "label",
+            { htmlFor: "newTitle", className: "col-sm-3 control-label" },
+            "Title"
+          ),
+          React.createElement(
             "div",
-            { className: "recipe" },
+            { className: "col-sm-9" },
+            React.createElement("input", {
+              className: "form-control",
+              id: "newTitle",
+              placeholder: "New Recipe",
+              onChange: this.changeTitle,
+              value: this.state.title,
+              type: "text"
+            })
+          )
+        ),
+        React.createElement(
+          "div",
+          { className: "form-group" },
+          React.createElement(
+            "label",
+            { htmlFor: "newDescription", className: "col-sm-3 control-label" },
+            "Description"
+          ),
+          React.createElement(
+            "div",
+            { className: "col-sm-9" },
+            React.createElement("textarea", {
+              className: "form-control",
+              id: "newDescription",
+              placeholder: "Recipe description",
+              onChange: this.changeDescription
+            })
+          )
+        ),
+        React.createElement(
+          "div",
+          { className: "form-group" },
+          React.createElement(
+            "label",
+            {
+              htmlFor: "newIngredientText",
+              className: "col-sm-3 control-label"
+            },
+            "New Ingredient"
+          ),
+          React.createElement(
+            "div",
+            { className: "col-sm-9" },
             React.createElement(
-                "h3",
-                null,
-                "Add a New Recipe"
-            ),
-            React.createElement(
-                "div",
-                { className: "form-horizontal" },
+              "div",
+              { className: "input-group" },
+              React.createElement("input", {
+                className: "form-control",
+                type: "text",
+                id: "newIngredientText",
+                placeholder: "New Ingredient",
+                value: this.state.newIngredient,
+                onChange: this.changeNewIngredientText
+              }),
+              React.createElement(
+                "span",
+                { className: "input-group-btn" },
                 React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "label",
-                        { htmlFor: "newTitle", className: "col-sm-3 control-label" },
-                        "Title"
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-sm-9" },
-                        React.createElement("input", {
-                            className: "form-control",
-                            id: "newTitle",
-                            placeholder: "New Recipe",
-                            onChange: this.changeTitle,
-                            value: this.state.title,
-                            type: "text" })
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "label",
-                        { htmlFor: "newDescription", className: "col-sm-3 control-label" },
-                        "Description"
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-sm-9" },
-                        React.createElement("textarea", {
-                            className: "form-control",
-                            id: "newDescription",
-                            placeholder: "Recipe description",
-                            onChange: this.changeDescription })
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "label",
-                        { htmlFor: "newIngredientText", className: "col-sm-3 control-label" },
-                        "New Ingredient"
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-sm-9" },
-                        React.createElement(
-                            "div",
-                            { className: "input-group" },
-                            React.createElement("input", {
-                                className: "form-control",
-                                type: "text",
-                                id: "newIngredientText",
-                                placeholder: "New Ingredient",
-                                value: this.state.newIngredient,
-                                onChange: this.changeNewIngredientText }),
-                            React.createElement(
-                                "span",
-                                { className: "input-group-btn" },
-                                React.createElement(
-                                    "button",
-                                    { className: "btn btn-primary", type: "button", onClick: this.addIngredient },
-                                    "Add Ingredient"
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "label",
-                        { htmlFor: "newStepText", className: "col-sm-3 control-label" },
-                        "New Step"
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "col-sm-9" },
-                        React.createElement("textarea", {
-                            className: "form-control",
-                            type: "text",
-                            id: "newIngredientText",
-                            placeholder: "New Step Instructions" })
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "div",
-                        { className: "col-sm-offset-3 col-sm-9" },
-                        React.createElement(
-                            "button",
-                            { className: "btn btn-primary", type: "button" },
-                            "Add Step"
-                        )
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "form-group" },
-                    React.createElement(
-                        "div",
-                        { className: "col-sm-12" },
-                        React.createElement(
-                            "button",
-                            { type: "submit", className: "btn btn-default" },
-                            "Add Recipe"
-                        )
-                    )
+                  "button",
+                  {
+                    className: "btn btn-primary",
+                    type: "button",
+                    onClick: this.addIngredient
+                  },
+                  "Add Ingredient"
                 )
-            ),
-            React.createElement(Recipe, {
-                title: newTitleText,
-                description: this.state.description,
-                steps: this.state.steps,
-                ingredients: this.state.ingredients })
-        );
-    }
+              )
+            )
+          )
+        ),
+        React.createElement(
+          "div",
+          { className: "form-group" },
+          React.createElement(
+            "label",
+            { htmlFor: "newStepText", className: "col-sm-3 control-label" },
+            "New Step"
+          ),
+          React.createElement(
+            "div",
+            { className: "col-sm-9" },
+            React.createElement("textarea", {
+              className: "form-control",
+              type: "text",
+              id: "newIngredientText",
+              placeholder: "New Step Instructions"
+            })
+          )
+        ),
+        React.createElement(
+          "div",
+          { className: "form-group" },
+          React.createElement(
+            "div",
+            { className: "col-sm-offset-3 col-sm-9" },
+            React.createElement(
+              "button",
+              { className: "btn btn-primary", type: "button" },
+              "Add Step"
+            )
+          )
+        ),
+        React.createElement(
+          "div",
+          { className: "form-group" },
+          React.createElement(
+            "div",
+            { className: "col-sm-12" },
+            React.createElement(
+              "button",
+              { type: "submit", className: "btn btn-default" },
+              "Add Recipe"
+            )
+          )
+        )
+      ),
+      React.createElement(Recipe, {
+        title: newTitleText,
+        description: this.state.description,
+        steps: this.state.steps,
+        ingredients: this.state.ingredients
+      })
+    );
+  }
 });
 "use strict";
 
 var CommentForm = function CommentForm(_ref) {
-    var comment = _ref.comment,
-        onCommentChange = _ref.onCommentChange,
-        onCommentSubmit = _ref.onCommentSubmit,
-        commenterName = _ref.commenterName,
-        onCommenterNameChange = _ref.onCommenterNameChange,
-        formError = _ref.formError;
+  var comment = _ref.comment,
+      onCommentChange = _ref.onCommentChange,
+      onCommentSubmit = _ref.onCommentSubmit,
+      commenterName = _ref.commenterName,
+      onCommenterNameChange = _ref.onCommenterNameChange,
+      formError = _ref.formError;
 
+  var visibleFormError = formError ? React.createElement(
+    "div",
+    { className: "alert alert-danger" },
+    formError
+  ) : undefined;
 
-    var visibleFormError = formError ? React.createElement(
-        "div",
-        { className: "alert alert-danger" },
-        formError
-    ) : undefined;
-
-    return React.createElement(
-        "form",
-        {
-            onSubmit: function onSubmit(e) {
-                e.preventDefault();
-                onCommentSubmit(comment, commenterName);
-            } },
-        React.createElement(
-            "div",
-            { className: "form-group" },
-            React.createElement(
-                "label",
-                { className: "input-control" },
-                "Comment"
-            ),
-            React.createElement("input", {
-                type: "text",
-                value: comment,
-                onChange: function onChange(e) {
-                    onCommentChange(e.target.value);
-                },
-                className: "form-control" })
-        ),
-        React.createElement(
-            "div",
-            { className: "form-group" },
-            React.createElement(
-                "label",
-                { className: "input-control" },
-                "Your Name"
-            ),
-            React.createElement("input", {
-                type: "text",
-                value: commenterName,
-                onChange: function onChange(e) {
-                    onCommenterNameChange(e.target.value);
-                },
-                className: "form-control" })
-        ),
-        React.createElement(
-            "div",
-            { className: "form-group" },
-            React.createElement(
-                "button",
-                { type: "submit", className: "btn btn-primary" },
-                "Submit"
-            )
-        ),
-        visibleFormError
-    );
+  return React.createElement(
+    "form",
+    {
+      onSubmit: function onSubmit(e) {
+        e.preventDefault();
+        onCommentSubmit(comment, commenterName);
+      }
+    },
+    React.createElement(
+      "div",
+      { className: "form-group" },
+      React.createElement(
+        "label",
+        { className: "input-control" },
+        "Comment"
+      ),
+      React.createElement("input", {
+        type: "text",
+        value: comment,
+        onChange: function onChange(e) {
+          onCommentChange(e.target.value);
+        },
+        className: "form-control"
+      })
+    ),
+    React.createElement(
+      "div",
+      { className: "form-group" },
+      React.createElement(
+        "label",
+        { className: "input-control" },
+        "Your Name"
+      ),
+      React.createElement("input", {
+        type: "text",
+        value: commenterName,
+        onChange: function onChange(e) {
+          onCommenterNameChange(e.target.value);
+        },
+        className: "form-control"
+      })
+    ),
+    React.createElement(
+      "div",
+      { className: "form-group" },
+      React.createElement(
+        "button",
+        { type: "submit", className: "btn btn-primary" },
+        "Submit"
+      )
+    ),
+    visibleFormError
+  );
 };
 "use strict";
 
 var CommentList = function CommentList(_ref) {
-    var comments = _ref.comments;
+  var comments = _ref.comments;
 
-    return React.createElement(
-        "ul",
-        { className: "list-unstyled" },
-        comments.map(function (commentData) {
-            return React.createElement(
-                "li",
-                null,
-                "[",
-                commentData.commenter,
-                "]: ",
-                commentData.comment
-            );
-        })
-    );
+  return React.createElement(
+    "ul",
+    { className: "list-unstyled" },
+    comments.map(function (commentData) {
+      return React.createElement(
+        "li",
+        null,
+        "[",
+        commentData.commenter,
+        "]: ",
+        commentData.comment
+      );
+    })
+  );
 };
 "use strict";
 
