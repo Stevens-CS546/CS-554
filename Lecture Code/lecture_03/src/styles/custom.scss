@@ -1,13 +1,43 @@
 @import "variables";
+@import "./bootstrap/scss/bootstrap.scss";
+
+@mixin border-bottom($size) {
+    border-bottom: $size solid #000;
+}
 
 * {
     box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
     background: $body-background;
-    color: $brand-primary;
+    color: darken($brand-primary, 20%);
     font-family: Georgia, Cambria, "Times New Roman", Times, serif;
     font-size: $primary-font-size;
     background-clip: border-box;
+}
+
+p {
+    font-size: $secondary-font-size;
+}
+
+section.#{$main-content-class} {
+    h2 {
+        @include border-bottom(2px);
+    }
+    p {
+        @if $main-content-class==book {
+            font-size: 12pt;
+        }
+        @else {
+            font-size: $secondary-font-size+6pt;
+        }
+        main & {
+            color: $brand-primary;
+        }
+        span {
+            font-style: italic;
+        }
+    }
 }

@@ -1,40 +1,51 @@
-import React, { Component } from 'react';
-import { getBook } from '../../../data/books';
-import SingleBook from './SingleBook';
+import React, { Component } from "react";
+import { getBook } from "../../../data/books";
+import SingleBook from "./SingleBook";
+import { clipboard } from "electron";
 
 class SingleBookContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            book: undefined,
-            bookBlobUrl: undefined
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+      book: undefined,
+      bookBlobUrl: undefined
+    };
+  }
+
+  copyTextOfBook(book) {
+    console.log(book);
+    if (!book || !book.bookText) {
+      return;
     }
 
-    setStateFromBook(book) {
-        const blob = new Blob([book.bookText], { type: 'text/html' });
-        const bookBlobUrl = window.URL.createObjectURL(blob);
+    const bookText = book.bookText;
+    clipboard.writeText(bookText);
+  }
 
-        this.setState({ book, bookBlobUrl });
-    }
+  setStateFromBook(book) {
+    const blob = new Blob([book.bookText], { type: "text/html" });
+    const bookBlobUrl = window.URL.createObjectURL(blob);
 
-    async componentDidMount() {
-        const bookId = parseInt(this.props.match.params.id, 10);
-        const book = await getBook(bookId);
-        this.setStateFromBook(book);
-    }
+    this.setState({ book, bookBlobUrl });
+  }
 
-    async componentWillReceiveProps(nextProps) {
-        const bookId = parseInt(nextProps.match.params.id, 10);
-        const book = await getBook(bookId);
-        this.setStateFromBook(book);
-    }
+  async componentDidMount() {
+    const bookId = parseInt(this.props.match.params.id, 10);
+    const book = await getBook(bookId);
+    this.setStateFromBook(book);
+  }
 
-    render() {
-        if (this.state.book === undefined) return <div>Loading...</div>;
+  async componentWillReceiveProps(nextProps) {
+    const bookId = parseInt(nextProps.match.params.id, 10);
+    const book = await getBook(bookId);
+    this.setStateFromBook(book);
+  }
 
-        return <SingleBook book={this.state.book} contentUrl={this.state.bookBlobUrl} />
-    }
+  render() {
+    if (this.state.book === undefined) return <div>Loading...</div>;
+
+    return <SingleBook copyBookText={this.copyTextOfBook} book={this.state.book} contentUrl={this.state.bookBlobUrl} />;
+  }
 }
 
 export default SingleBookContainer;

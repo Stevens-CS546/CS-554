@@ -28,6 +28,10 @@ server.listen(port, "localhost", function(err) {
   // Module to control application life.
   const app = electron.app;
   const Menu = electron.Menu;
+  // Keep a global reference of the window object, if you don't, the window will
+  // be closed automatically when the JavaScript object is garbage collected.
+  let mainWindow;
+
   const menuItems = [
     {
       label: "CS-554-A",
@@ -51,9 +55,9 @@ server.listen(port, "localhost", function(err) {
           submenu: []
         },
         {
-          label: "My Test Callback",
+          label: "Go to Booklist",
           click: (menuItem, browserWindow, event) => {
-            console.log("Got clicked!");
+            mainWindow.loadURL("http://localhost:9000/books");
           }
         }
       ]
@@ -66,9 +70,6 @@ server.listen(port, "localhost", function(err) {
   // Module to create native browser window.
   const BrowserWindow = electron.BrowserWindow;
 
-  // Keep a global reference of the window object, if you don't, the window will
-  // be closed automatically when the JavaScript object is garbage collected.
-  let mainWindow;
 
   function createWindow() {
     // Create the browser window.
