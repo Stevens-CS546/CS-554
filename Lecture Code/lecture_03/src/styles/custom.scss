@@ -1,6 +1,7 @@
 @import "variables";
 @import "./bootstrap/scss/bootstrap.scss";
 
+
 @mixin border-bottom($size) {
     border-bottom: $size solid #000;
 }

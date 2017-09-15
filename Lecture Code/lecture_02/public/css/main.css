@@ -165,7 +165,7 @@ nav ul li:nth-child(2) {
 /* Our first flexbox */
 
 * {
-   box-sizing: border-box; 
+   box-sizing: border- box; 
 }
 
 .flex-container {

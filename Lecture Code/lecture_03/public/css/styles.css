@@ -329,10 +329,10 @@ blockquote {
   margin: 0 0 1rem; }
 
 a {
-  color: #4d4d4d;
+  color: #999;
   text-decoration: none; }
   a:focus, a:hover {
-    color: #272727;
+    color: #737373;
     text-decoration: underline; }
 
 a:not([href]):not([tabindex]) {
@@ -1354,10 +1354,10 @@ tbody.collapse.show {
   background-color: #f7f7f7; }
 
 .bg-primary {
-  background-color: #4d4d4d !important; }
+  background-color: #999 !important; }
 
 a.bg-primary:focus, a.bg-primary:hover {
-  background-color: #343434 !important; }
+  background-color: gray !important; }
 
 .bg-success {
   background-color: #5cb85c !important; }
@@ -3217,10 +3217,10 @@ a.text-muted:focus, a.text-muted:hover {
   color: #4b5257 !important; }
 
 .text-primary {
-  color: #4d4d4d !important; }
+  color: #999 !important; }
 
 a.text-primary:focus, a.text-primary:hover {
-  color: #343434 !important; }
+  color: gray !important; }
 
 .text-success {
   color: #5cb85c !important; }
@@ -3328,7 +3328,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 body,
 html {
   background: #FEFEFE;
-  color: #1a1a1a;
+  color: #666666;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: 14pt;
   background-clip: border-box; }
@@ -3342,6 +3342,6 @@ section.book h2 {
 section.book p {
   font-size: 12pt; }
   main section.book p {
-    color: #4d4d4d; }
+    color: #999; }
   section.book p span {
     font-style: italic; }
