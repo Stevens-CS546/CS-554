@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Socket.IO chat</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		
+		body {
+			font: 13px Helvetica, Arial;
+		}
+		
+		form {
+			background: #000;
+			padding: 3px;
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+		}
+		
+		form select {
+			width: 25%;
+			margin-right: 2.0%;
+		}
+		
+		form input {
+			border: 0;
+			padding: 10px;
+			width: 60%;
+			margin-right: 2.0%;
+		}
+		
+		form button {
+			width: 10%;
+			background: rgb(130, 224, 255);
+			border: none;
+			padding: 10px;
+		}
+		
+		#messages {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		
+		#messages li {
+			padding: 5px 10px;
+		}
+		
+		#messages li:nth-child(odd) {
+			background: #eee;
+		}
+	</style>
+</head>
+
+<body>
+	<ul id="messages"></ul>
+	<form action="">
+		<select id="room-selector">
+			<option value="">Chat Rooms</option>
+			<option value="general">General</option>
+			<option value="trains">Trains</option>
+		</select>
+		<input id="m" autocomplete="off" /><button>Send</button>
+	</form>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+		const nickname = "Phil the Great";
+		const socket = io('http://localhost:3000/chat');
+		const messages = $("#messages");
+		const messageInput = $("#m");
+		const theForm = $("form");
+		const roomSelector = $("#room-selector");
+		let currentRoomId = "";
+
+		socket.on("joined-room", (roomId) => {
+			currentRoomId = roomId;
+			roomSelector.val(roomId);
+		})
+
+		socket.on('request-credentials', () => {
+			socket.emit('setup', { nickname: nickname });
+		});
+
+		socket.on('receive-message', function (msg) {
+			messages.append($('<li>').text(msg));
+		});
+
+		theForm.submit(function () {
+			let message = {
+				text: messageInput.val(),
+				room: currentRoomId
+			};
+
+			socket.emit('send-message', message);
+			messageInput.val('');
+			return false;
+		});
+
+		roomSelector.on("change", () => {
+			let newRoom = roomSelector.val();
+
+			if (newRoom === currentRoomId) {
+				return;
+			}
+
+			messages.empty();
+			socket.emit("join-room", {
+				newRoom: newRoom,
+				previousRoom: currentRoomId
+			});
+		})
+
+		socket.emit("join-room", {
+			newRoom: "general",
+			previousRoom: currentRoomId
+		});
+	</script>
+</body>
+
+</html>
