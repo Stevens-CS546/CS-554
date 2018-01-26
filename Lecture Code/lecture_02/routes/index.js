@@ -1,10 +1,10 @@
-const constructorMethod = (app) => {
-    app.use("/flex", (req, response) => {
-        response.render("flexbox", { pageTitle: "Flexbox Stuff" });
-    })
+const bookRoutes = require("./books");
 
-    app.use("*", (req, response) => {
-        response.render("home", { pageTitle: "Advanced CSS3" });
+const constructorMethod = (app) => {
+    app.use("/books", bookRoutes);
+
+    app.use("*", (req, res) => {
+        res.redirect("/books/16");
     })
 };
 

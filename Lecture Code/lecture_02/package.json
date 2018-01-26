@@ -1,15 +1,43 @@
 {
-  "name": "lecture_11",
+  "name": "CS-554",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "A small demo of gulp, SASS, and  application",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "build": "gulp build"
   },
-  "author": "",
-  "license": "MIT",
+  "productName": "CS-554",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stevens-CS546/CS-554"
+  },
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/Stevens-CS546/CS-554/issues"
+  },
+  "homepage": "https://github.com/Stevens-CS546/CS-554#readme",
+  "devDependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "jquery": "^3.1.1",
+    "tether": "^1.4.0"
+  },
   "dependencies": {
+    "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
