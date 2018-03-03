@@ -6,11 +6,21 @@ const fs = Promise.promisifyAll(require("fs"));
 const path = require("path");
 
 const books = [
-  { id: 1080, title: "A Modest Proposal", author: "Jonathon Swift", nextBook: 132 },
+  {
+    id: 1080,
+    title: "A Modest Proposal",
+    author: "Jonathon Swift",
+    nextBook: 132
+  },
   { id: 132, title: "The Art of War", author: "Sun Tzu", nextBook: 135 },
   { id: 135, title: "Les Misérables", author: "Victor Hugo", nextBook: 16 },
   { id: 16, title: "Peter Pan", author: "James Matthew Barrie", nextBook: 829 },
-  { id: 829, title: "Gulliver's Travels", author: "Jonathon Swift", nextBook: 1080 }
+  {
+    id: 829,
+    title: "Gulliver's Travels",
+    author: "Jonathon Swift",
+    nextBook: 1080
+  }
 ];
 
 const exportedMethods = {

@@ -70,7 +70,6 @@ server.listen(port, "localhost", function(err) {
   // Module to create native browser window.
   const BrowserWindow = electron.BrowserWindow;
 
-
   function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({ width: 800, height: 600 });

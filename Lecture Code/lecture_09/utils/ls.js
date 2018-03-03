@@ -1,5 +1,5 @@
 const spawn = require("child_process").spawn;
-function uint8arrayToStringMethod(myUint8Arr){
+function uint8arrayToStringMethod(myUint8Arr) {
   return String.fromCharCode.apply(null, myUint8Arr);
 }
 
@@ -16,13 +16,15 @@ exports.listDirectory = filePath => {
     const proc = spawn(command, args);
 
     let gatheredByteArray = new Uint8Array(0);
-    
+
     proc.stderr.on("data", chunk => {
       // stream.emit("error", chunk);
     });
 
     proc.stdout.on("data", chunk => {
-      const newByteArray = new Uint8Array(gatheredByteArray.length + chunk.length);
+      const newByteArray = new Uint8Array(
+        gatheredByteArray.length + chunk.length
+      );
 
       newByteArray.set(gatheredByteArray);
       newByteArray.set(chunk, gatheredByteArray.length);

@@ -16,7 +16,7 @@ var AppComponent = function AppComponent() {
     )
   );
 };
-"use strict";
+("use strict");
 
 var CommentContainer = React.createClass({
   displayName: "CommentContainer",
@@ -48,14 +48,17 @@ var CommentContainer = React.createClass({
   componentDidMount: function componentDidMount() {
     var _this = this;
 
-    this.loadComments().then(function (commentList) {
+    this.loadComments().then(function(commentList) {
       _this.setState({ comments: commentList });
     });
   },
   handleCommentChange: function handleCommentChange(newText) {
     this.setState({ newComment: newText });
   },
-  handleCommentSubmission: function handleCommentSubmission(newComment, newCommenterName) {
+  handleCommentSubmission: function handleCommentSubmission(
+    newComment,
+    newCommenterName
+  ) {
     var _this2 = this;
 
     if (!newComment) {
@@ -69,8 +72,11 @@ var CommentContainer = React.createClass({
     }
 
     var commentList = this.state.comments;
-    var currentlyMatchingComment = commentList.filter(function (commentData) {
-      return commentData.comment === newComment && commentData.commenter === newCommenterName;
+    var currentlyMatchingComment = commentList.filter(function(commentData) {
+      return (
+        commentData.comment === newComment &&
+        commentData.commenter === newCommenterName
+      );
     });
 
     if (currentlyMatchingComment.length > 0) {
@@ -84,13 +90,16 @@ var CommentContainer = React.createClass({
       newComment: ""
     });
 
-    this.addComment(newCommenterName, newComment).then(function (newCommentObject) {
-      _this2.setState({
-        comments: _this2.state.comments.concat(newCommentObject)
-      });
-    }, function (error) {
-      _this2.setState({ error: JSON.stringify(error) });
-    });
+    this.addComment(newCommenterName, newComment).then(
+      function(newCommentObject) {
+        _this2.setState({
+          comments: _this2.state.comments.concat(newCommentObject)
+        });
+      },
+      function(error) {
+        _this2.setState({ error: JSON.stringify(error) });
+      }
+    );
   },
   handleCommentNameChange: function handleCommentNameChange(newCommenterName) {
     if (!newCommenterName) return;
@@ -115,111 +124,87 @@ var CommentContainer = React.createClass({
     );
   }
 });
-"use strict";
+("use strict");
 
 var RecipeContainer = React.createClass({
-    displayName: "RecipeContainer",
+  displayName: "RecipeContainer",
 
-    getInitialState: function getInitialState() {
-        return { recipes: [] };
-    },
+  getInitialState: function getInitialState() {
+    return { recipes: [] };
+  },
 
-    componentDidMount: function componentDidMount() {
-        var _this = this;
+  componentDidMount: function componentDidMount() {
+    var _this = this;
 
-        $.ajax({
-            url: this.props.url,
-            dataType: 'json',
-            cache: false,
-            success: function success(recipeList) {
-                _this.setState({ recipes: recipeList });
-            },
-            error: function error(xhr, status, err) {
-                console.error(_this.props.url, status, err.toString());
-            }
-        });
-    },
+    $.ajax({
+      url: this.props.url,
+      dataType: "json",
+      cache: false,
+      success: function success(recipeList) {
+        _this.setState({ recipes: recipeList });
+      },
+      error: function error(xhr, status, err) {
+        console.error(_this.props.url, status, err.toString());
+      }
+    });
+  },
 
-    render: function render() {
-        return React.createElement(
-            "div",
-            { className: "recipe" },
-            React.createElement(RecipeList, { recipes: this.state.recipes }),
-            React.createElement("hr", null),
-            React.createElement(RecipeForm, null)
-        );
-    }
+  render: function render() {
+    return React.createElement(
+      "div",
+      { className: "recipe" },
+      React.createElement(RecipeList, { recipes: this.state.recipes }),
+      React.createElement("hr", null),
+      React.createElement(RecipeForm, null)
+    );
+  }
 });
-"use strict";
+("use strict");
 
 var Recipe = function Recipe(_ref) {
   var steps = _ref.steps,
-      title = _ref.title,
-      description = _ref.description,
-      ingredients = _ref.ingredients;
+    title = _ref.title,
+    description = _ref.description,
+    ingredients = _ref.ingredients;
 
-  var viewSteps = steps.map(function (step) {
-    return React.createElement(
-      "li",
-      null,
-      step
-    );
+  var viewSteps = steps.map(function(step) {
+    return React.createElement("li", null, step);
   });
 
-  var viewIngredients = ingredients.map(function (step) {
-    return React.createElement(
-      "li",
-      null,
-      step
-    );
+  var viewIngredients = ingredients.map(function(step) {
+    return React.createElement("li", null, step);
   });
 
   return React.createElement(
     "div",
     { className: "panel panel-default" },
-    React.createElement(
-      "div",
-      { className: "panel-heading" },
-      title
-    ),
+    React.createElement("div", { className: "panel-heading" }, title),
     React.createElement(
       "div",
       { className: "panel-body" },
       React.createElement(
         "div",
         null,
-        React.createElement(
-          "p",
-          null,
-          description
-        ),
+        React.createElement("p", null, description),
         React.createElement(
           "div",
           { className: "row" },
           React.createElement(
             "div",
             { className: "col-md-8" },
-            React.createElement(
-              "ol",
-              null,
-              viewSteps
-            )
+            React.createElement("ol", null, viewSteps)
           ),
           React.createElement(
             "div",
             { className: "col-sm-4" },
-            React.createElement(
-              "ul",
-              null,
-              viewIngredients
-            )
+            React.createElement("ul", null, viewIngredients)
           )
         )
       )
     )
   );
 };
-"use strict";
+("use strict");
 
 var RecipeForm = React.createClass({
   displayName: "RecipeForm",
@@ -247,16 +232,19 @@ var RecipeForm = React.createClass({
     this.setState({ newIngredient: e.target.value });
   },
   render: function render() {
-    var newTitleText = "New Recipe: " + (this.state.title || "") + " (" + this.state.ingredients.length + " ingredients, " + this.state.steps.length + " steps)";
+    var newTitleText =
+      "New Recipe: " +
+      (this.state.title || "") +
+      " (" +
+      this.state.ingredients.length +
+      " ingredients, " +
+      this.state.steps.length +
+      " steps)";
 
     return React.createElement(
       "div",
       { className: "recipe" },
-      React.createElement(
-        "h3",
-        null,
-        "Add a New Recipe"
-      ),
+      React.createElement("h3", null, "Add a New Recipe"),
       React.createElement(
         "div",
         { className: "form-horizontal" },
@@ -396,21 +384,19 @@ var RecipeForm = React.createClass({
     );
   }
 });
-"use strict";
+("use strict");
 
 var CommentForm = function CommentForm(_ref) {
   var comment = _ref.comment,
-      onCommentChange = _ref.onCommentChange,
-      onCommentSubmit = _ref.onCommentSubmit,
-      commenterName = _ref.commenterName,
-      onCommenterNameChange = _ref.onCommenterNameChange,
-      formError = _ref.formError;
+    onCommentChange = _ref.onCommentChange,
+    onCommentSubmit = _ref.onCommentSubmit,
+    commenterName = _ref.commenterName,
+    onCommenterNameChange = _ref.onCommenterNameChange,
+    formError = _ref.formError;
 
-  var visibleFormError = formError ? React.createElement(
-    "div",
-    { className: "alert alert-danger" },
-    formError
-  ) : undefined;
+  var visibleFormError = formError
+    ? React.createElement("div", { className: "alert alert-danger" }, formError)
+    : undefined;
 
   return React.createElement(
     "form",
@@ -423,11 +409,7 @@ var CommentForm = function CommentForm(_ref) {
     React.createElement(
       "div",
       { className: "form-group" },
-      React.createElement(
-        "label",
-        { className: "input-control" },
-        "Comment"
-      ),
+      React.createElement("label", { className: "input-control" }, "Comment"),
       React.createElement("input", {
         type: "text",
         value: comment,
@@ -440,11 +422,7 @@ var CommentForm = function CommentForm(_ref) {
     React.createElement(
       "div",
       { className: "form-group" },
-      React.createElement(
-        "label",
-        { className: "input-control" },
-        "Your Name"
-      ),
+      React.createElement("label", { className: "input-control" }, "Your Name"),
       React.createElement("input", {
         type: "text",
         value: commenterName,
@@ -466,7 +444,7 @@ var CommentForm = function CommentForm(_ref) {
     visibleFormError
   );
 };
-"use strict";
+("use strict");
 
 var CommentList = function CommentList(_ref) {
   var comments = _ref.comments;
@@ -474,7 +452,7 @@ var CommentList = function CommentList(_ref) {
   return React.createElement(
     "ul",
     { className: "list-unstyled" },
-    comments.map(function (commentData) {
+    comments.map(function(commentData) {
       return React.createElement(
         "li",
         null,
@@ -486,25 +464,29 @@ var CommentList = function CommentList(_ref) {
     })
   );
 };
-"use strict";
+("use strict");
 
 var RecipeList = function RecipeList(_ref) {
-    var recipes = _ref.recipes;
+  var recipes = _ref.recipes;
 
-    return React.createElement(
-        "div",
-        null,
-        recipes.map(function (recipe) {
-            return React.createElement(Recipe, {
-                key: recipe.id,
-                title: recipe.title,
-                description: recipe.description,
-                id: recipe.id,
-                steps: recipe.steps,
-                ingredients: recipe.ingredients });
-        })
-    );
+  return React.createElement(
+    "div",
+    null,
+    recipes.map(function(recipe) {
+      return React.createElement(Recipe, {
+        key: recipe.id,
+        title: recipe.title,
+        description: recipe.description,
+        id: recipe.id,
+        steps: recipe.steps,
+        ingredients: recipe.ingredients
+      });
+    })
+  );
 };
-'use strict';
+("use strict");
 
-ReactDOM.render(React.createElement(AppComponent, null), document.getElementById('content'));
+ReactDOM.render(
+  React.createElement(AppComponent, null),
+  document.getElementById("content")
+);

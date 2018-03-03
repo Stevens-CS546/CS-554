@@ -5,33 +5,34 @@
  * --------------------------------------------------------------------------
  */
 
-const Util = (($) => {
-
-
+const Util = ($ => {
   /**
    * ------------------------------------------------------------------------
    * Private TransitionEnd Helpers
    * ------------------------------------------------------------------------
    */
 
-  let transition = false
+  let transition = false;
 
-  const MAX_UID = 1000000
+  const MAX_UID = 1000000;
 
   const TransitionEndEvent = {
-    WebkitTransition : 'webkitTransitionEnd',
-    MozTransition    : 'transitionend',
-    OTransition      : 'oTransitionEnd otransitionend',
-    transition       : 'transitionend'
-  }
+    WebkitTransition: "webkitTransitionEnd",
+    MozTransition: "transitionend",
+    OTransition: "oTransitionEnd otransitionend",
+    transition: "transitionend"
+  };
 
   // shoutout AngusCroll (https://goo.gl/pxwQGp)
   function toType(obj) {
-    return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+    return {}.toString
+      .call(obj)
+      .match(/\s([a-zA-Z]+)/)[1]
+      .toLowerCase();
   }
 
   function isElement(obj) {
-    return (obj[0] || obj).nodeType
+    return (obj[0] || obj).nodeType;
   }
 
   function getSpecialTransitionEndEvent() {
@@ -40,55 +41,54 @@ const Util = (($) => {
       delegateType: transition.end,
       handle(event) {
         if ($(event.target).is(this)) {
-          return event.handleObj.handler.apply(this, arguments) // eslint-disable-line prefer-rest-params
+          return event.handleObj.handler.apply(this, arguments); // eslint-disable-line prefer-rest-params
         }
-        return undefined
+        return undefined;
       }
-    }
+    };
   }
 
   function transitionEndTest() {
     if (window.QUnit) {
-      return false
+      return false;
     }
 
-    let el = document.createElement('bootstrap')
+    let el = document.createElement("bootstrap");
 
     for (let name in TransitionEndEvent) {
       if (el.style[name] !== undefined) {
-        return { end: TransitionEndEvent[name] }
+        return { end: TransitionEndEvent[name] };
       }
     }
 
-    return false
+    return false;
   }
 
   function transitionEndEmulator(duration) {
-    let called = false
+    let called = false;
 
     $(this).one(Util.TRANSITION_END, () => {
-      called = true
-    })
+      called = true;
+    });
 
     setTimeout(() => {
       if (!called) {
-        Util.triggerTransitionEnd(this)
+        Util.triggerTransitionEnd(this);
       }
-    }, duration)
+    }, duration);
 
-    return this
+    return this;
   }
 
   function setTransitionEndSupport() {
-    transition = transitionEndTest()
+    transition = transitionEndTest();
 
-    $.fn.emulateTransitionEnd = transitionEndEmulator
+    $.fn.emulateTransitionEnd = transitionEndEmulator;
 
     if (Util.supportsTransitionEnd()) {
-      $.event.special[Util.TRANSITION_END] = getSpecialTransitionEndEvent()
+      $.event.special[Util.TRANSITION_END] = getSpecialTransitionEndEvent();
     }
   }
-
 
   /**
    * --------------------------------------------------------------------------
@@ -97,69 +97,68 @@ const Util = (($) => {
    */
 
   let Util = {
-
-    TRANSITION_END: 'bsTransitionEnd',
+    TRANSITION_END: "bsTransitionEnd",
 
     getUID(prefix) {
       do {
         /* eslint-disable no-bitwise */
-        prefix += ~~(Math.random() * MAX_UID) // "~~" acts like a faster Math.floor() here
+        prefix += ~~(Math.random() * MAX_UID); // "~~" acts like a faster Math.floor() here
         /* eslint-enable no-bitwise */
-      } while (document.getElementById(prefix))
-      return prefix
+      } while (document.getElementById(prefix));
+      return prefix;
     },
 
     getSelectorFromElement(element) {
-      let selector = element.getAttribute('data-target')
+      let selector = element.getAttribute("data-target");
 
       if (!selector) {
-        selector = element.getAttribute('href') || ''
-        selector = /^#[a-z]/i.test(selector) ? selector : null
+        selector = element.getAttribute("href") || "";
+        selector = /^#[a-z]/i.test(selector) ? selector : null;
       }
 
-      return selector
+      return selector;
     },
 
     reflow(element) {
-      new Function('bs', 'return bs')(element.offsetHeight)
+      new Function("bs", "return bs")(element.offsetHeight);
     },
 
     triggerTransitionEnd(element) {
-      $(element).trigger(transition.end)
+      $(element).trigger(transition.end);
     },
 
     supportsTransitionEnd() {
-      return Boolean(transition)
+      return Boolean(transition);
     },
 
     typeCheckConfig(componentName, config, configTypes) {
       for (let property in configTypes) {
         if (configTypes.hasOwnProperty(property)) {
-          let expectedTypes = configTypes[property]
-          let value         = config[property]
-          let valueType
+          let expectedTypes = configTypes[property];
+          let value = config[property];
+          let valueType;
 
           if (value && isElement(value)) {
-            valueType = 'element'
+            valueType = "element";
           } else {
-            valueType = toType(value)
+            valueType = toType(value);
           }
 
           if (!new RegExp(expectedTypes).test(valueType)) {
             throw new Error(
               `${componentName.toUpperCase()}: ` +
-              `Option "${property}" provided type "${valueType}" ` +
-              `but expected type "${expectedTypes}".`)
+                `Option "${property}" provided type "${valueType}" ` +
+                `but expected type "${expectedTypes}".`
+            );
           }
         }
       }
     }
-  }
+  };
 
-  setTransitionEndSupport()
+  setTransitionEndSupport();
 
-  return Util
+  return Util;
+})(jQuery);
 
-})(jQuery)
-
-export default Util
+export default Util;

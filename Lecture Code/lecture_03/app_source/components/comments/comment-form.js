@@ -6,9 +6,11 @@ const CommentForm = ({
   onCommenterNameChange,
   formError
 }) => {
-  let visibleFormError = formError
-    ? <div className="alert alert-danger">{formError}</div>
-    : undefined;
+  let visibleFormError = formError ? (
+    <div className="alert alert-danger">{formError}</div>
+  ) : (
+    undefined
+  );
 
   return (
     <form
@@ -17,7 +19,6 @@ const CommentForm = ({
         onCommentSubmit(comment, commenterName);
       }}
     >
-
       <div className="form-group">
         <label className="input-control">Comment</label>
         <input
@@ -43,11 +44,12 @@ const CommentForm = ({
       </div>
 
       <div className="form-group">
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
       </div>
 
       {visibleFormError}
-
     </form>
   );
 };

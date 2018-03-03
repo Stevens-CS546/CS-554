@@ -44,7 +44,13 @@ class SingleBookContainer extends Component {
   render() {
     if (this.state.book === undefined) return <div>Loading...</div>;
 
-    return <SingleBook copyBookText={this.copyTextOfBook} book={this.state.book} contentUrl={this.state.bookBlobUrl} />;
+    return (
+      <SingleBook
+        copyBookText={this.copyTextOfBook}
+        book={this.state.book}
+        contentUrl={this.state.bookBlobUrl}
+      />
+    );
   }
 }
 

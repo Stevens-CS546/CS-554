@@ -9,25 +9,27 @@ const cssFiles = "./public/css/source/**/*.css";
 const sassFiles = "./public/css/source/sass/**/*.scss";
 
 gulp.task("sass", () => {
-    gulp.src(sassFiles)
-        .pipe(gulpSASS())
-        .pipe(concatenate("styles-from-sass.min.css"))
-        .pipe(autoPrefix())
-        //.pipe(cleanCSS())
-        .pipe(gulp.dest("./public/css/"));
+  gulp
+    .src(sassFiles)
+    .pipe(gulpSASS())
+    .pipe(concatenate("styles-from-sass.min.css"))
+    .pipe(autoPrefix())
+    //.pipe(cleanCSS())
+    .pipe(gulp.dest("./public/css/"));
 });
 
 gulp.task("css", () => {
-    gulp.src(cssFiles)
-        .pipe(concatenate("styles.min.css"))
-        .pipe(autoPrefix())
-        .pipe(cleanCSS())
-        .pipe(gulp.dest("./public/css/"));
-})
+  gulp
+    .src(cssFiles)
+    .pipe(concatenate("styles.min.css"))
+    .pipe(autoPrefix())
+    .pipe(cleanCSS())
+    .pipe(gulp.dest("./public/css/"));
+});
 
 gulp.task("watch", () => {
-    gulp.watch(cssFiles, ["css"]);
-    gulp.watch(sassFiles, ["sass"]);
+  gulp.watch(cssFiles, ["css"]);
+  gulp.watch(sassFiles, ["sass"]);
 });
 
 gulp.task("default", ["watch"]);

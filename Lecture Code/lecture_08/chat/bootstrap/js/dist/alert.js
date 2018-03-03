@@ -1,6 +1,25 @@
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function() {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  return function(Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+})();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
 
 /**
  * --------------------------------------------------------------------------
@@ -9,19 +28,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * --------------------------------------------------------------------------
  */
 
-var Alert = function ($) {
-
+var Alert = (function($) {
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
 
-  var NAME = 'alert';
-  var VERSION = '4.0.0-alpha.5';
-  var DATA_KEY = 'bs.alert';
-  var EVENT_KEY = '.' + DATA_KEY;
-  var DATA_API_KEY = '.data-api';
+  var NAME = "alert";
+  var VERSION = "4.0.0-alpha.5";
+  var DATA_KEY = "bs.alert";
+  var EVENT_KEY = "." + DATA_KEY;
+  var DATA_API_KEY = ".data-api";
   var JQUERY_NO_CONFLICT = $.fn[NAME];
   var TRANSITION_DURATION = 150;
 
@@ -30,15 +48,15 @@ var Alert = function ($) {
   };
 
   var Event = {
-    CLOSE: 'close' + EVENT_KEY,
-    CLOSED: 'closed' + EVENT_KEY,
-    CLICK_DATA_API: 'click' + EVENT_KEY + DATA_API_KEY
+    CLOSE: "close" + EVENT_KEY,
+    CLOSED: "closed" + EVENT_KEY,
+    CLICK_DATA_API: "click" + EVENT_KEY + DATA_API_KEY
   };
 
   var ClassName = {
-    ALERT: 'alert',
-    FADE: 'fade',
-    IN: 'in'
+    ALERT: "alert",
+    FADE: "fade",
+    IN: "in"
   };
 
   /**
@@ -47,7 +65,7 @@ var Alert = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  var Alert = function () {
+  var Alert = (function() {
     function Alert(element) {
       _classCallCheck(this, Alert);
 
@@ -87,7 +105,7 @@ var Alert = function ($) {
       }
 
       if (!parent) {
-        parent = $(element).closest('.' + ClassName.ALERT)[0];
+        parent = $(element).closest("." + ClassName.ALERT)[0];
       }
 
       return parent;
@@ -103,22 +121,30 @@ var Alert = function ($) {
     Alert.prototype._removeElement = function _removeElement(element) {
       $(element).removeClass(ClassName.IN);
 
-      if (!Util.supportsTransitionEnd() || !$(element).hasClass(ClassName.FADE)) {
+      if (
+        !Util.supportsTransitionEnd() ||
+        !$(element).hasClass(ClassName.FADE)
+      ) {
         this._destroyElement(element);
         return;
       }
 
-      $(element).one(Util.TRANSITION_END, $.proxy(this._destroyElement, this, element)).emulateTransitionEnd(TRANSITION_DURATION);
+      $(element)
+        .one(Util.TRANSITION_END, $.proxy(this._destroyElement, this, element))
+        .emulateTransitionEnd(TRANSITION_DURATION);
     };
 
     Alert.prototype._destroyElement = function _destroyElement(element) {
-      $(element).detach().trigger(Event.CLOSED).remove();
+      $(element)
+        .detach()
+        .trigger(Event.CLOSED)
+        .remove();
     };
 
     // static
 
     Alert._jQueryInterface = function _jQueryInterface(config) {
-      return this.each(function () {
+      return this.each(function() {
         var $element = $(this);
         var data = $element.data(DATA_KEY);
 
@@ -127,14 +153,14 @@ var Alert = function ($) {
           $element.data(DATA_KEY, data);
         }
 
-        if (config === 'close') {
+        if (config === "close") {
           data[config](this);
         }
       });
     };
 
     Alert._handleDismiss = function _handleDismiss(alertInstance) {
-      return function (event) {
+      return function(event) {
         if (event) {
           event.preventDefault();
         }
@@ -143,15 +169,17 @@ var Alert = function ($) {
       };
     };
 
-    _createClass(Alert, null, [{
-      key: 'VERSION',
-      get: function get() {
-        return VERSION;
+    _createClass(Alert, null, [
+      {
+        key: "VERSION",
+        get: function get() {
+          return VERSION;
+        }
       }
-    }]);
+    ]);
 
     return Alert;
-  }();
+  })();
 
   /**
    * ------------------------------------------------------------------------
@@ -159,7 +187,11 @@ var Alert = function ($) {
    * ------------------------------------------------------------------------
    */
 
-  $(document).on(Event.CLICK_DATA_API, Selector.DISMISS, Alert._handleDismiss(new Alert()));
+  $(document).on(
+    Event.CLICK_DATA_API,
+    Selector.DISMISS,
+    Alert._handleDismiss(new Alert())
+  );
 
   /**
    * ------------------------------------------------------------------------
@@ -169,11 +201,11 @@ var Alert = function ($) {
 
   $.fn[NAME] = Alert._jQueryInterface;
   $.fn[NAME].Constructor = Alert;
-  $.fn[NAME].noConflict = function () {
+  $.fn[NAME].noConflict = function() {
     $.fn[NAME] = JQUERY_NO_CONFLICT;
     return Alert._jQueryInterface;
   };
 
   return Alert;
-}(jQuery);
+})(jQuery);
 //# sourceMappingURL=alert.js.map

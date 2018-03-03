@@ -1,0 +1,26 @@
+{
+  "name": "cs-554",
+  "version": "1.0.0",
+  "description": "For CS-554 things",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stevens-CS546/CS-554.git"
+  },
+  "author": "Phil Barresi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Stevens-CS546/CS-554/issues"
+  },
+  "homepage": "https://github.com/Stevens-CS546/CS-554#readme",
+  "devDependencies": {
+    "husky": "^0.15.0-rc.8",
+    "install": "^0.10.4",
+    "npm": "^5.7.1",
+    "prettier": "1.11.1",
+    "pretty-quick": "^1.4.1"
+  }
+}

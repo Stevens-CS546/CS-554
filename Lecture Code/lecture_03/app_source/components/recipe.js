@@ -12,19 +12,13 @@ const Recipe = ({ steps, title, description, ingredients }) => {
       <div className="panel-heading">{title}</div>
       <div className="panel-body">
         <div>
-          <p>
-            {description}
-          </p>
+          <p>{description}</p>
           <div className="row">
             <div className="col-md-8">
-              <ol>
-                {viewSteps}
-              </ol>
+              <ol>{viewSteps}</ol>
             </div>
             <div className="col-sm-4">
-              <ul>
-                {viewIngredients}
-              </ul>
+              <ul>{viewIngredients}</ul>
             </div>
           </div>
         </div>

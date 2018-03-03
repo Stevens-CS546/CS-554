@@ -5,31 +5,33 @@ module.exports = function configureLibsass(grunt) {
   grunt.config.merge({
     sass: {
       options: {
-        includePaths: ['scss'],
+        includePaths: ["scss"],
         precision: 6,
         sourceComments: false,
         sourceMap: true,
-        outputStyle: 'expanded'
+        outputStyle: "expanded"
       },
       core: {
         files: {
-          'dist/css/<%= pkg.name %>.css': 'scss/<%= pkg.name %>.scss'
+          "dist/css/<%= pkg.name %>.css": "scss/<%= pkg.name %>.scss"
         }
       },
       extras: {
         files: {
-          'dist/css/<%= pkg.name %>-flex.css': 'scss/<%= pkg.name %>-flex.scss',
-          'dist/css/<%= pkg.name %>-grid.css': 'scss/<%= pkg.name %>-grid.scss',
-          'dist/css/<%= pkg.name %>-reboot.css': 'scss/<%= pkg.name %>-reboot.scss'
+          "dist/css/<%= pkg.name %>-flex.css": "scss/<%= pkg.name %>-flex.scss",
+          "dist/css/<%= pkg.name %>-grid.css": "scss/<%= pkg.name %>-grid.scss",
+          "dist/css/<%= pkg.name %>-reboot.css":
+            "scss/<%= pkg.name %>-reboot.scss"
         }
       },
       docs: {
         files: {
-          'docs/assets/css/docs.min.css': 'docs/assets/scss/docs.scss',
-          'docs/assets/css/docs-flexbox.min.css': 'docs/assets/scss/flex-grid.scss'
+          "docs/assets/css/docs.min.css": "docs/assets/scss/docs.scss",
+          "docs/assets/css/docs-flexbox.min.css":
+            "docs/assets/scss/flex-grid.scss"
         }
       }
     }
   });
-  grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks("grunt-sass");
 };

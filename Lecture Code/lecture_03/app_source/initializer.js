@@ -1,1 +1,1 @@
-ReactDOM.render(<AppComponent />, document.getElementById('content'));
+ReactDOM.render(<AppComponent />, document.getElementById("content"));

@@ -7,7 +7,8 @@ const SingleBook = ({ book, contentUrl, copyBookText }) => (
     <h3>{book.title}</h3>
     <h4>By {book.author}</h4>
     <aside>
-      Like this book? <button
+      Like this book?{" "}
+      <button
         onClick={e => {
           e.preventDefault();
           copyBookText(book);
@@ -18,7 +19,8 @@ const SingleBook = ({ book, contentUrl, copyBookText }) => (
     </aside>
     <p>
       <small>
-        Like this story? <Link to={`/books/${book.nextBook}`}>Read our next suggestion!</Link>
+        Like this story?{" "}
+        <Link to={`/books/${book.nextBook}`}>Read our next suggestion!</Link>
       </small>
     </p>
     <main>

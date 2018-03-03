@@ -23,8 +23,9 @@ const RecipeForm = React.createClass({
     this.setState({ newIngredient: e.target.value });
   },
   render() {
-    let newTitleText = `New Recipe: ${this.state.title || ""} (${this.state
-      .ingredients.length} ingredients, ${this.state.steps.length} steps)`;
+    let newTitleText = `New Recipe: ${this.state.title || ""} (${
+      this.state.ingredients.length
+    } ingredients, ${this.state.steps.length} steps)`;
 
     return (
       <div className="recipe">
