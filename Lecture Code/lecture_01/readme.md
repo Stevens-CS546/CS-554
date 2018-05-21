@@ -22,14 +22,12 @@ There will be some reading for this course; I will often point you to documentat
 
 ### Grade Breakdown
 
-| Material    | Percent | Comments                                                                                                                                                |
-| ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Assignments | 50%     | Assignments will be weighted equally. They will be given most weeks and cover the content learned that week; there will be between 7 and 10 assignments |
-
-| Final Project Implementation
-Plan | 5% | Students will form groups and propose a final project idea, and what technologies they will implement in it. |
-| Database Proposal | 5% | Each group will submit a proposal for their database collections and schema |
-| Final Project Result & Code | 45% | Each group will submit their project code, a readme, and a database dump to be reviewed and graded based on what was promised in their proposal and delivered. |
+| Material                          | Percent | Comments                                                                                                                                                       |
+| --------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Assignments                       | 50%     | Assignments will be weighted equally. They will be given most weeks and cover the content learned that week; there will be between 7 and 10 assignments        |
+| Final Project Implementation Plan | 5%      | Students will form groups and propose a final project idea, and what technologies they will implement in it.                                                   |
+| Database Proposal                 | 5%      | Each group will submit a proposal for their database collections and schema                                                                                    |
+| Final Project Result & Code       | 45%     | Each group will submit their project code, a readme, and a database dump to be reviewed and graded based on what was promised in their proposal and delivered. |
 
 ### Other Notes
 
