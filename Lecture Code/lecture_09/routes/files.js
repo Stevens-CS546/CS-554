@@ -16,7 +16,7 @@ router.get("/listing", async (req, res) => {
 });
 
 router.post("/", upload.single("imageToResize"), (req, res) => {
-  res.setHeader("Content-disposition", "attachment; filename=result.png");
+  // res.setHeader("Content-disposition", "attachment; filename=result.png");
   res.setHeader("Content-type", "image/png");
 
   const fileStream = fs.createReadStream(path.resolve(req.file.path));

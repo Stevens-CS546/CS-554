@@ -18,9 +18,13 @@
   "homepage": "https://github.com/Stevens-CS546/CS-554#readme",
   "devDependencies": {
     "husky": "^0.15.0-rc.8",
-    "install": "^0.10.4",
     "npm": "^5.7.1",
     "prettier": "1.11.1",
     "pretty-quick": "^1.4.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
