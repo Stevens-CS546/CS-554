@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This week, we will continue discussing the nuances of component based development with React. component based web development with React.
+This week, we will continue discussing the nuances of component based development with React.
 
 ## Running the Lecture Code
 
