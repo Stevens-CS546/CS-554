@@ -1,112 +1,111 @@
-# Welcome to the Lecture 4!
+# Welcome to the Lecture 3!
 
 ## Introduction
 
-This week, we will continue discussing the nuances of component based development with React.
+This week, we will cover component based web development with React.
 
 ## Running the Lecture Code
 
-1.  [Clone code](https://github.com/Stevens-CS554/superheroes)
+1.  Clone code
 2.  Run `npm install`
-3.  Run `npm start` to run the webpack development server
+3.  Run `npm start` to run the server _and_ set gulp to watch
 4.  Enjoy programming!
 
-## The Virtual DOM
+## React
 
-One of the most important concepts in React development is that it relies on a [Virtual DOM](https://reactjs.org/docs/faq-internals.html). The Virtual DOM is an in-memory representation of all your rendered components. The only time any of the _real_ DOM elements are manipulated on the page is when their _virtual_ DOM elements are updated. The only DOM elements updated are ones that have their virtual DOM counterparts updated, first.
-
-## Properties and State
-
-The data used to render a react component can only come from 2 places: properties (props), and state. There are fundamental differences of how and when we use one versus the other.
+React is a library used for building user interfaces in JavaScript. It's an incredibly powerful component based framework.
 
 There is one phrase to constantly keep in mind while developing in React: **Your view is a result of your properties and state.**
 
-### Properties
+### JSX
 
-Properties can be seen as the the inputs for components. A component cannot manipulate its own properties, because those are inputs from its parent component. When a component's properties are updated, the component rerenders.
+React is written in JSX, an XML-Like syntax thats's written in JavaScript. While writing JSX files, you are still writing entirely JavaScript -- like SASS and ES6, it gets transpiled down to normal JavaScript.
 
-We can see properties all over -- we can see that the [SuperHeroListContainer](https://github.com/Stevens-CS554/superheroes/blob/master/src/SuperHeroListContainer.js) passes a property called `heroList` to the `SuperHeroList` component. The [SuperHeroList](https://github.com/Stevens-CS554/superheroes/blob/master/src/SuperHeroList.js) component uses this property via `this.props.heroList`. Similarly, we have a stateless functional component, [SuperHeroEntry](https://github.com/Stevens-CS554/superheroes/blob/master/src/SuperHeroEntry.js) that uses props by destructuring them from the function arguments.
+### Babel
 
-### State
+Babel is a library that parses a JavaScript file into an abstract syntax tree, and then convert it to output normal JavaScript. For example, in JSX:
 
-The state is the internal data that a component uses to decide what to render. You can view it as private variables. Each time the state is changed using the `setState` method, the component rerenders.
+    <div>
+        <h1>Test</h1>
+    </div>
 
-In our [SearchForm.js](https://github.com/Stevens-CS554/superheroes/blob/master/src/SearchForm.js) file, we set the internal state of the search form each time we change the search query using the `onSearchQueryChange` callback.
+Becomes:
 
-## JSX Syntax
+    React.createElement(
+        "div",
+        null,
+        React.createElement(
+            "h1",
+            null,
+            "Test"
+        )
+    );
 
-JSX is an XML-Like syntax that gets compiled to plain old JavaScript. Since it is written in JavaScript, there are some syntactical factors you have to account for. There are also some best practices
+Babel also converts things like `async / await` in your frontend codebase down to 'normal' JavaScript that older browsers can understand.
 
-### Setting CSS Classes
+# Basic React Concepts
 
-In JavaScript, the word `class` is a reserved keyword, so we use the `className` property on a JSX element in order to give it CSS classes.
+## Components
 
-For example, to give a `div` a class of `col-sm-12` we would use: `<div className="col-sm-12">`.
+Components are generally categorized as `container components`, which act as components that perform "app logic" such as querying data and submitting data to servers. Other components are `display components`, which just take in data and make a view out of them.
 
-### onChange
+Some components are `stateful`, which means they have a state that gets manipulated over time. Others are `stateless`, which means they don't change over time besides when their properies change.
 
-Our [SearchForm](https://github.com/Stevens-CS554/superheroes/blob/master/src/SearchForm.js) uses the `onChange` property to update the state when the input changes.
+Some components are `stateless functional components` which don't use class notation, but have no `state` and instead are so slim that they are expressed as functions that return JSX. An example is [the recipe component](https://github.com/Stevens-CS546/CS-554/blob/master/Lecture%20Code/lecture_03/app_source/components/recipe.js).
 
-```
-<input
-    type="text"
-    value={this.state.searchQuery}
-    onChange={this.onSearchQueryChange}
-    className="form-control"
-    id="superheroName"
-    aria-describedby="superheroHelp"
-    placeholder="Superhero..."
-/>
-```
+# Codebase
 
-Events in React generally come with a `target` property, pointing to their DOM element.
+We've got two repositories to look at this week:
 
-```
-  onSearchQueryChange = e => {
-    this.setState({
-      searchQuery: e.target.value
-    });
-  };
-```
+## Recipe List (Basic Demo)
 
-We track the `onChange` event of that input, and then we set the state `searchQuery` property with the value from the input.
+[The application source](https://github.com/Stevens-CS546/CS-554/tree/master/Lecture%20Code/lecture_03/app_source) of the recipe list is an oversimplified example. The lecture slides go into details of many of the individual files
 
-### htmlFor
+### Files of note
 
-Most languages have a `for` loop, meaning the `for` keyword is reserved. To give an element the `for` attribute we simply use `htmlFor`.
+**Note: all these start in the `/app_source/components/` folder.**
 
-```
-<label htmlFor="superheroName">
-    What superhero do you want to search for?
-</label>
-```
+| src                       | notes                                                                                                                                                                                                                                                                             |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/app.js`                 | This file is a container that blocks off the layout into seperate main areas of the application                                                                                                                                                                                   |
+| `/recipe_container.js`    | This file contains some class level logic for how recipes behave; it's a class that does three things: sets up an initial state where there are no recipes, queries a server for recipes when the component is attached to the page, and then uses that data for other components |
+| `/recipes/recipe-list.js` | This file takes in a list of recipes as properties and renders them                                                                                                                                                                                                               |
 
-### Controlled Inputs
+Those patterns hold up for the comment sections as well.
 
-One of the huge benefits of using React is to have a view that is entirely rendered from the component data, meaning that we can make sure that the UI rendered is always exactly as expected. The UI is _only_ composed from the data in the component.
+## Superhero Listing (Multi-week Demo)
 
-Therefore, `input` elements pose a problem: their display comes from users manipulating the elements. We can circumvent this and control our inputs by manually setting the `value` property on the input, meaning it will always use a value from the state or property. Our input about is controled.
+[This demo on marvel superheroes](https://github.com/Stevens-CS554/superheroes) will be covered across the next few weeks. This week, we'll focus on just the structure of a `create-react-app`.
 
-### onClick
+### create-react-app
 
-You can run events when an element is clicked by hooking into the `onClick` property of an element.
+`create-react-app` is a [command line tool](https://github.com/facebook/create-react-app) that easily sets up a node package that acts as a single page web application with React.
 
-## Component Life Cycle
+We'll focus on a few simple things this week:
 
-Components emit a series of events depending on what changes a component is undergoing.
+* Webpack and import statements
+* The webpack dev server
+* General structure
 
-### constructor
+### webpack and import statements
 
-A components constructor is called when the component is first initialized. This is where you would set a components initial state, and setup any other internal class variables required.
+Webpack is a module bundler for JavaScript. It's much more complete than a Gulp solution, where it will build out an entire frontend application including the HTML that the pages are mounted to.
 
-### componentDidMount
+Webpack is pointed at a single file (usually an index.js) file, and it looks for `import`statements in that file. It opens each file imported, and each file they import, and so on -- it builds a dependency tree. It constantly rebuilds the output as changes are made.
 
-When a component is added to the component tree, its `componentDidMount` property is called. At this point, you would use the components properties to fetch data from an API endpoint on a server.
+### webpack-dev-server
 
-### componentDidUpdate / componentWillReceiveProps
+The superhero app server comes bundled with a `webpack-dev-server` that runs when the app start, a development server that runs that reloads the app as changes are made.
 
-When the `props` of a component change, the `componentDidUpdate` property is called; this used to be called `componentWillReceiveProps`. For example, if a superhero component needs to fetch data based on the `id` prop passed to the component, when that `id` changes, you would want to re-query the server for the new hero. You would perform this in the `componentDidUpdate` call.
+### General Structure
 
-### componentWillUnmount
+| path            | explanation                                                                                                                       |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `/src`          | The source directory of the single page JavaScript app                                                                            |
+| `/src/index.js` | This file simply imports the main React app, and mounts it to the main page                                                       |
+| `/src/App.js`   | This is our first React component here; it's simply a container to start the main layout. It uses a router, which we'll see later |
+| `/src/Site.js`  | The site file maintains some "state" for the app, which is the application state at a point in time                               |
 
-When a component is removed from the component tree, the `componentWillUnmount` property is called. This can be very useful; for example, if you are making an email editor component, when the component unmounts you may want to save a draft.
+---
+
+We'll focus on this repository more next week!

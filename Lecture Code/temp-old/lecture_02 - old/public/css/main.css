@@ -1,0 +1,198 @@
+body {
+  background: #fefefe;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 14pt;
+}
+
+#the-heading {
+  font-size: 3rem;
+}
+
+main {
+  max-width: 75%;
+  margin: auto;
+}
+
+nav li a {
+  color: #afafaf;
+}
+
+main > a {
+  color: #f096b8;
+}
+
+nav li.active ~ li {
+  font-size: 3rem;
+}
+
+nav li.active + li a {
+  color: #903600;
+}
+
+header {
+  border-bottom: 1px solid #afafaf;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #333;
+  margin-bottom: 5px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-size: 1.15rem;
+}
+
+h6 {
+  font-size: 1.05rem;
+}
+
+p {
+  font-size: 2rem;
+  line-height: 2;
+}
+
+.post {
+  width: 75%;
+  border-bottom: 1px dashed #333;
+}
+
+/* Attr exists */
+
+a[data-chatroom] {
+  font-style: italic;
+}
+
+a[data-chatroom="1"] {
+  color: #000;
+}
+
+a[href*="google"] {
+  color: #008800;
+}
+
+/* Pseudo-classes */
+
+nav li:hover {
+  background-color: #beeeef;
+}
+
+input:disabled {
+  background-color: #903600;
+}
+
+nav ul li:first-child {
+  opacity: 0.7;
+}
+
+nav ul li:last-child {
+  transform: rotate(5deg);
+}
+
+.messages li:first-of-type {
+  transform: scale(1.05);
+}
+
+nav ul li:nth-child(2) {
+  padding-left: 20px;
+}
+
+.messages li:target {
+  background-color: #f00eeb;
+}
+
+.messages li:not(:target) {
+  background-color: #903600;
+}
+
+.messages li:empty {
+  display: block;
+  height: 20px;
+  width: 100%;
+  background: #008800;
+}
+
+.subtopic::first-line {
+  font-size: 2.5rem;
+}
+
+.subtopic::first-letter {
+  font-size: 3rem;
+}
+
+.topic::before {
+  content: "Today's topic...";
+  display: block;
+  font-style: italic;
+  font-size: 1.5rem;
+}
+
+.topic::after {
+  display: block;
+  border-bottom: 5px solid #000;
+  content: " ";
+  width: 100%;
+  height: 10px;
+}
+
+::selection {
+  color: #999;
+  background-color: #0f0;
+}
+
+::-moz-selection {
+  color: #999;
+  background-color: #0f0;
+}
+
+/* Our first flexbox */
+
+* {
+  box-sizing: border- box;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-container article {
+  /* Flex shorthand: flex-grow, flex-shrink: flex-basis:  */
+  flex: 1 0 25%;
+  border: 1px solid #000;
+}
+
+.flex-vertical-container {
+  margin: 50px auto;
+  display: flex;
+  min-height: 500px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+}
+
+.flex-vertical-container article {
+  flex: 1;
+  max-width: 250px;
+  background: #008800;
+}

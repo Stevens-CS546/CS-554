@@ -1,111 +1,111 @@
-# Welcome to the Lecture 3!
-
 ## Introduction
 
-This week, we will cover component based web development with React.
+This week, we will cover optimizaitons, something, and SASS.
 
-## Running the Lecture Code
+Our real world case study this week will be searching large data sets using Tries!
 
-1.  Clone code
-2.  Run `npm install`
-3.  Run `npm start` to run the server _and_ set gulp to watch
-4.  Enjoy programming!
+## Optimizations
 
-## React
+The Web is a complicated series of interactions, and each interaction comes at a cost. There are many optimizations we can easily make on our websites to make them easier to distribute.
 
-React is a library used for building user interfaces in JavaScript. It's an incredibly powerful component based framework.
+### Declutter your head (tag)
 
-There is one phrase to constantly keep in mind while developing in React: **Your view is a result of your properties and state.**
+Websites will only load a few external URLs per domain at a certain time, and the body of a page won't start rendering until all the assets in your head tag are downloaded, interpreted, and run. If we can make our head tags minimal, with few assets (and small ones!) we will be able to ensure a more rapid render.
 
-### JSX
+### Minify, Uglify, Optimize your Code
 
-React is written in JSX, an XML-Like syntax thats's written in JavaScript. While writing JSX files, you are still writing entirely JavaScript -- like SASS and ES6, it gets transpiled down to normal JavaScript.
+We can dramatically reduce the amount of characters our code ships down to the user with. For example, in this simple CSS block:
 
-### Babel
+```
+.foo {
+	color: #000;
+	font-size: 12pt;
+	font-weight: 700;
+	border: 1px solid #EEE;
+}
 
-Babel is a library that parses a JavaScript file into an abstract syntax tree, and then convert it to output normal JavaScript. For example, in JSX:
+.bar {
+	color: #000;
+	font-size: 12pt;
+	font-weight: 700;
+	border: 1px solid #000;
+}
+```
 
-    <div>
-        <h1>Test</h1>
-    </div>
+We can condense that to:
 
-Becomes:
+```
+.foo, .bar {
+	color: #000;
+	font-size: 12pt;
+	font-weight: 700;
+}
 
-    React.createElement(
-        "div",
-        null,
-        React.createElement(
-            "h1",
-            null,
-            "Test"
-        )
-    );
+.foo {
+	border: 1px solid #000;
+}
 
-Babel also converts things like `async / await` in your frontend codebase down to 'normal' JavaScript that older browsers can understand.
+.bar {
+	border: 1px solid #EEE;
+}
+```
 
-# Basic React Concepts
+And then further to:
 
-## Components
+```
+.bar,.foo{color:#000;font-size:12pt;font-weight:700}.foo{border:1px solid #000}.bar{border:1px solid #EEE}
+```
 
-Components are generally categorized as `container components`, which act as components that perform "app logic" such as querying data and submitting data to servers. Other components are `display components`, which just take in data and make a view out of them.
+The original string is `197` characters; the final string is `106`; imagine having 200 selectors to begin with instead of 2! During download, a user has to download `91` extra characters if you do not optimize it; scale that to 200 more rules, and we'll just ballpark it as `9100`, or `8.88671875KB`.
 
-Some components are `stateful`, which means they have a state that gets manipulated over time. Others are `stateless`, which means they don't change over time besides when their properies change.
+Usually, your savings will be even greater than that.
 
-Some components are `stateless functional components` which don't use class notation, but have no `state` and instead are so slim that they are expressed as functions that return JSX. An example is [the recipe component](https://github.com/Stevens-CS546/CS-554/blob/master/Lecture%20Code/lecture_03/app_source/components/recipe.js).
+### Remove Dead Code / Reduce Overhead / Reduce Requests
 
-# Codebase
+Reducing the number of assets you use in general is an amazing optimization. Sometimes, it's more than worth it to replicate a tiny part of a library if you only need it for a handful of situations. That allows you to reduce bloat tremendously, and avoid another HTTP request to the server, which takes a considerable amount of time (relatively speaking, of course).
 
-We've got two repositories to look at this week:
+### Caching and CDNs
 
-## Recipe List (Basic Demo)
+We can leverage caching and CDNS to ensure that we don't need to download files that we've already downloaded before.
 
-[The application source](https://github.com/Stevens-CS546/CS-554/tree/master/Lecture%20Code/lecture_03/app_source) of the recipe list is an oversimplified example. The lecture slides go into details of many of the individual files
+### Compress Text with Gzip, Optimize Images
 
-### Files of note
+We can reduce file sizes dramatically by optimizing images or GZipping them, which is basically 0-effort to perform.
 
-**Note: all these start in the `/app_source/components/` folder.**
+## Applying Optimizations via Gulp
 
-| src                       | notes                                                                                                                                                                                                                                                                             |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/app.js`                 | This file is a container that blocks off the layout into seperate main areas of the application                                                                                                                                                                                   |
-| `/recipe_container.js`    | This file contains some class level logic for how recipes behave; it's a class that does three things: sets up an initial state where there are no recipes, queries a server for recipes when the component is attached to the page, and then uses that data for other components |
-| `/recipes/recipe-list.js` | This file takes in a list of recipes as properties and renders them                                                                                                                                                                                                               |
+We can apply many of these optimizations through various Gulp plugins or simply modifying our practices. [Gulp is a task runner](https://gulpjs.com/) that allows us to define and run particular tasks, which are chains of commands that fire off on a set of files.
 
-Those patterns hold up for the comment sections as well.
+For example, let's take a look at [our repository for this week](https://github.com/Stevens-CS546/CS-554/blob/master/Lecture%20Code/lecture_02/gulpfile.js). We register several tasks in this file:
 
-## Superhero Listing (Multi-week Demo)
+* `sass`
+* `js:vendor`
+* `build`; this runs `sass` and `js:vendor`, as they are listed as dependencies
+* `watch`
+* `default`
 
-[This demo on marvel superheroes](https://github.com/Stevens-CS554/superheroes) will be covered across the next few weeks. This week, we'll focus on just the structure of a `create-react-app`.
+The basic flow of a task is simple:
 
-### create-react-app
+1.  Use `gulp.src` on a [glob](https://www.npmjs.com/package/globule) to make a stream representing the contents of each file matched by the glob
+2.  Pipe the result of that stream to a new stream using `.pipe(OPERATION)`, where `OPERATION` is a task that returns a new stream with the new data
+3.  Repeat pipe for each step
+4.  Perform a `pipe` to `gulp.dest('path')` to save the result
 
-`create-react-app` is a [command line tool](https://github.com/facebook/create-react-app) that easily sets up a node package that acts as a single page web application with React.
+There are many operations that we can perform that are listed in the lecture slides, and there are hundreds of gulp plugins available on NPM!
 
-We'll focus on a few simple things this week:
+## SASS
 
-* Webpack and import statements
-* The webpack dev server
-* General structure
+### What is SASS?
 
-### webpack and import statements
+[SASS is a more maintainable way of writing CSS](https://sass-lang.com/). It brings some programmability to CSS, such as the usage of variables and loops, and import statements, and a minor amount of inheritance / other OOP concepts.
 
-Webpack is a module bundler for JavaScript. It's much more complete than a Gulp solution, where it will build out an entire frontend application including the HTML that the pages are mounted to.
+The slides and documentation go over a number of functions that SASS provides.
 
-Webpack is pointed at a single file (usually an index.js) file, and it looks for `import`statements in that file. It opens each file imported, and each file they import, and so on -- it builds a dependency tree. It constantly rebuilds the output as changes are made.
+### How do compile SASS?
 
-### webpack-dev-server
+For now, we will be using a plugin for gulp named `gulp-sass` to build our SASS files. An example of building SASS files is seen in [this week's repository](https://github.com/Stevens-CS546/CS-554/blob/master/Lecture%20Code/lecture_02/gulpfile.js).
 
-The superhero app server comes bundled with a `webpack-dev-server` that runs when the app start, a development server that runs that reloads the app as changes are made.
+## Assignment Help
 
-### General Structure
-
-| path            | explanation                                                                                                                       |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `/src`          | The source directory of the single page JavaScript app                                                                            |
-| `/src/index.js` | This file simply imports the main React app, and mounts it to the main page                                                       |
-| `/src/App.js`   | This is our first React component here; it's simply a container to start the main layout. It uses a router, which we'll see later |
-| `/src/Site.js`  | The site file maintains some "state" for the app, which is the application state at a point in time                               |
-
----
-
-We'll focus on this repository more next week!
+* You will use the repository from this week but modify it slightly to theme your own bootstrap
+* You should read [theming bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/theming) in order to get a guide, from the source, on how to properly import and override Bootstrap Variables. Essentially, you will make 1 file that imports Bootstrap's files, and overrides with your own variables to customize it slightly.

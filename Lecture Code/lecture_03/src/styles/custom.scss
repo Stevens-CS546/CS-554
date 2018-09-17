@@ -1,0 +1,85 @@
+@import "variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+/* That imports the entirety of bootstrap, taken from ../../node_modules/bootstrap/scss/bootstrap.scss
+ we can optimize it by only selectively including the modules we need:
+*/
+
+/* 
+ @import "functions";
+ @import "variables";
+ @import "mixins";
+ @import "root";
+ @import "reboot";
+ @import "type";
+ @import "images";
+ @import "code";
+ @import "grid";
+ @import "tables";
+ @import "forms";
+ @import "buttons";
+ @import "transitions";
+ @import "dropdown";
+ @import "button-group";
+ @import "input-group";
+ @import "custom-forms";
+ @import "nav";
+ @import "navbar";
+ @import "card";
+ @import "breadcrumb";
+ @import "pagination";
+ @import "badge";
+ @import "jumbotron";
+ @import "alert";
+ @import "progress";
+ @import "media";
+ @import "list-group";
+ @import "close";
+ @import "modal";
+ @import "tooltip";
+ @import "popover";
+ @import "carousel";
+ @import "utilities";
+ @import "print";
+
+ */
+
+@mixin border-bottom($size) {
+  border-bottom: $size solid #000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  background: $body-background;
+  color: darken($brand-primary, 20%);
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: $primary-font-size;
+  background-clip: border-box;
+}
+
+p {
+  font-size: $secondary-font-size;
+}
+
+section.#{$main-content-class} {
+  h2 {
+    @include border-bottom(2px);
+  }
+  p {
+    @if $main-content-class==book {
+      font-size: 12pt;
+    } @else {
+      font-size: $secondary-font-size + 6pt;
+    }
+    main & {
+      color: $brand-primary;
+    }
+    span {
+      font-style: italic;
+    }
+  }
+}

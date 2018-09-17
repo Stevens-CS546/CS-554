@@ -1,0 +1,35 @@
+{
+  "name": "cs-554-lecture-04",
+  "version": "1.0.0",
+  "description": "A small demo react application",
+  "main": "main.js",
+  "scripts": {
+    "start": "node app.js",
+    "build": "./node_modules/.bin/babel src --out-file public/js/app.js",
+    "watch":
+      "./node_modules/.bin/babel src --watch --out-file public/js/app.js",
+    "dev": "concurrently \"npm run start\" \"npm run build\" \"npm run watch\""
+  },
+  "productName": "CS-554",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stevens-CS546/CS-554"
+  },
+  "keywords": ["quick", "start", "tutorial"],
+  "author": "GitHub",
+  "bugs": {
+    "url": "https://github.com/Stevens-CS546/CS-554/issues"
+  },
+  "homepage": "https://github.com/Stevens-CS546/CS-554#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-syntax-class-properties": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "concurrently": "^4.0.1"
+  },
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}

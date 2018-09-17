@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  background: #fefefe;
+  color: #333;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 20pt;
+}
