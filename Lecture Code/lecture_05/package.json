@@ -1,0 +1,43 @@
+{
+  "name": "cs-554-lecture-04",
+  "version": "1.0.0",
+  "description": "A small demo react application",
+  "main": "main.js",
+  "scripts": {
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack"
+  },
+  "productName": "CS-554",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stevens-CS546/CS-554"
+  },
+  "keywords": ["quick", "start", "tutorial"],
+  "author": "GitHub",
+  "bugs": {
+    "url": "https://github.com/Stevens-CS546/CS-554/issues"
+  },
+  "homepage": "https://github.com/Stevens-CS546/CS-554#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-syntax-class-properties": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.8"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.4",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
+  }
+}
