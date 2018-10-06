@@ -1,0 +1,43 @@
+{
+  "name": "CS-554",
+  "version": "1.0.0",
+  "description": "An API for book data",
+  "main": "main.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "productName": "CS-554",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stevens-CS546/CS-554"
+  },
+  "keywords": ["Electron", "quick", "start", "tutorial"],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/Stevens-CS546/CS-554/issues"
+  },
+  "homepage": "https://github.com/Stevens-CS546/CS-554#readme",
+  "devDependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "jquery": "^3.1.1",
+    "tether": "^1.4.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.5",
+    "mongodb": "^2.1.18",
+    "node-uuid": "^1.4.7",
+    "xss": "^0.2.13"
+  }
+}
