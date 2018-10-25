@@ -1,0 +1,37 @@
+{
+  "name": "workers-typescript-flow",
+  "version": "1.0.0",
+  "description":
+    "A simple repo to compare and contrast flow and typescript, as well as demonstrate some simple worker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "flow": "flow",
+    "build-flow": "flow-remove-types src/flow -d dist/flow",
+    "build-ts": "tsc -p ./src/typescript",
+    "run-flow": "yarn run flow"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stevens-CS554/workers-typescript-flow.git"
+  },
+  "author": "Phil Barresi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Stevens-CS554/workers-typescript-flow/issues"
+  },
+  "homepage": "https://github.com/Stevens-CS554/workers-typescript-flow#readme",
+  "dependencies": {
+    "@types/jquery": "^3.3.1",
+    "@types/sharedworker": "0.0.27",
+    "axios": "^0.18.0",
+    "express": "^4.16.3",
+    "flow": "^0.2.3",
+    "global": "^4.3.2",
+    "typescript": "^2.8.3"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.71.0",
+    "flow-remove-types": "^1.2.3"
+  }
+}
